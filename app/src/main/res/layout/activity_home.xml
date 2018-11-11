@@ -5,7 +5,7 @@
 
         <variable
             name="handler"
-            type="rmnvich.apps.kinonika.presentation.activity.home.mvp.HomeActivity" />
+            type="rmnvich.apps.kinonika.presentation.activity.home.HomeActivity" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"

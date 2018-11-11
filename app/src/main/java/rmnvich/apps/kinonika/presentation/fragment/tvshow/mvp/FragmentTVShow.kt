@@ -1,4 +1,4 @@
-package rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp
+package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
 
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -10,24 +10,24 @@ import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.databinding.FragmentCartoonBinding
+import rmnvich.apps.kinonika.databinding.FragmentTvshowBinding
 import javax.inject.Inject
 
-class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
+class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
 
-    private lateinit var binding: FragmentCartoonBinding
+    private lateinit var binding: FragmentTvshowBinding
 
     @Inject
-    lateinit var mPresenter: FragmentCartoonPresenter
+    lateinit var mPresenter: FragmentTVShowPresenter
 
     companion object {
-        fun newInstance(): FragmentCartoon {
-            return FragmentCartoon()
+        fun newInstance(): FragmentTVShow {
+            return FragmentTVShow()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cartoon, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tvshow, container, false)
         binding.handler = this
 
         return binding.root
