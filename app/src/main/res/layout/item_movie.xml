@@ -16,6 +16,9 @@
         android:layout_marginTop="@dimen/item_movie_vertical_margin"
         android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
         android:layout_marginBottom="@dimen/item_movie_vertical_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/itemColorBackground"
         app:cardCornerRadius="@dimen/card_view_corner_radius">
 
