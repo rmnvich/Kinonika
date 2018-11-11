@@ -8,6 +8,7 @@ import dagger.Provides;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 import rmnvich.apps.kinonika.data.di.base.BaseComponentBuilder;
+import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository;
 import rmnvich.apps.kinonika.data.repository.database.utils.AppDatabase;
 import rmnvich.apps.kinonika.presentation.activity.home.dagger.HomeActivityComponent;
 import rmnvich.apps.kinonika.presentation.activity.home.mvp.HomeActivity;
@@ -25,6 +26,12 @@ public class AppModule {
     @Provides
     Context provideContext() {
         return mContext;
+    }
+
+    @PerApplication
+    @Provides
+    DatabaseRepository provideDatabaseRepository(AppDatabase appDatabase) {
+        return new DatabaseRepository(appDatabase);
     }
 
     @Provides
