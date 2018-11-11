@@ -4,8 +4,10 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#d8961b</color>
     <color name="colorAccentLight">#ba9d63</color>
-    <color name="colorAccentWhite">#ccc2b0</color>
+    <color name="colorAccentWhite">#d1c9ba</color>
 
     <color name="colorBackground">#353535</color>
     <color name="itemColorBackground">#171717</color>
+
+    <color name="colorBlackAlpha">#8c000000</color>
 </resources>

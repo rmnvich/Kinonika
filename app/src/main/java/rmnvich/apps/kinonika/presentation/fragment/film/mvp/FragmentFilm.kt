@@ -12,7 +12,7 @@ import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
-import rmnvich.apps.kinonika.presentation.activity.make.MakeReview
+import rmnvich.apps.kinonika.presentation.activity.make.MakeReviewActivity
 import javax.inject.Inject
 
 class FragmentFilm : Fragment(), FragmentFilmContract.View {
@@ -34,7 +34,7 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
 
         binding.fabAddFilm.setOnClickListener {
             activity?.startActivityFromFragment(this,
-                Intent(activity, MakeReview::class.java), 0)
+                Intent(activity, MakeReviewActivity::class.java), 0)
         }
 
         return binding.root

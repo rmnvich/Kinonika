@@ -15,4 +15,5 @@
     <string name="rating_kinopoisk">IMDb:</string>
     <string name="tag">Tag:</string>
     <string name="make_review">Make review</string>
+    <string name="review_title">Review</string>
 </resources>

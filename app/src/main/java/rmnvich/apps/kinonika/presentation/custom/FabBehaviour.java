@@ -11,6 +11,10 @@ import android.view.animation.LinearInterpolator;
 
 public class FabBehaviour extends FloatingActionButton.Behavior {
 
+    public FabBehaviour(Context context, AttributeSet attrs) {
+        super();
+    }
+
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull FloatingActionButton child,
                                @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {

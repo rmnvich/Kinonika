@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="handler"
+            type="rmnvich.apps.kinonika.presentation.activity.make.MakeReviewActivity" />
+
+        <variable
             name="movie"
             type="rmnvich.apps.kinonika.data.entity.Movie" />
     </data>
@@ -48,7 +52,6 @@
                     android:layout_marginTop="@dimen/item_movie_horizontal_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_vertical_margin"
-                    android:padding="@dimen/item_movie_padding"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toTopOf="@id/card_view_description"
@@ -59,15 +62,23 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/item_movie_padding">
 
-                        <ImageView
-                            android:id="@+id/iv_poster"
-                            android:layout_width="@dimen/poster_size"
-                            android:layout_height="@dimen/poster_size"
-                            android:contentDescription="@string/poster"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/example"
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_poster"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/colorAccent"
+                            app:cardCornerRadius="@dimen/card_view_corner_radius"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_poster"
+                                android:layout_width="@dimen/poster_size"
+                                android:layout_height="@dimen/poster_size"
+                                android:contentDescription="@string/poster"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/example" />
+                        </android.support.v7.widget.CardView>
 
                         <RatingBar
                             android:id="@+id/rating_bar"
@@ -78,7 +89,7 @@
                             android:numStars="5"
                             android:rating="@{movie.rating}"
                             android:stepSize="1"
-                            app:layout_constraintStart_toEndOf="@id/iv_poster"
+                            app:layout_constraintStart_toEndOf="@id/card_view_poster"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
@@ -90,13 +101,13 @@
                             android:text="@{movie.name}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iv_poster"
-                            app:met_baseColor="@android:color/white"
+                            app:layout_constraintStart_toEndOf="@id/card_view_poster"
+                            app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/name"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -108,7 +119,6 @@
                     android:layout_marginTop="@dimen/item_movie_vertical_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_vertical_margin"
-                    android:padding="@dimen/item_movie_padding"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toTopOf="@id/card_view_tag"
@@ -125,26 +135,26 @@
                             android:layout_height="wrap_content"
                             android:text="@{movie.country}"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:met_baseColor="@android:color/white"
+                            app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/country"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
                             android:id="@+id/et_year"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="text|number"
                             android:text="@{String.valueOf(movie.year)}"
                             app:layout_constraintTop_toBottomOf="@id/et_country"
-                            app:met_baseColor="@android:color/white"
+                            app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/year"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
                             android:id="@+id/et_genre"
@@ -153,12 +163,12 @@
                             android:enabled="false"
                             android:text="@{movie.genre}"
                             app:layout_constraintTop_toBottomOf="@id/et_year"
-                            app:met_baseColor="@android:color/white"
+                            app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/genre"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
                             android:id="@+id/et_kinopoisk"
@@ -167,12 +177,12 @@
                             android:inputType="numberDecimal"
                             android:text="@{movie.ratingIMDb}"
                             app:layout_constraintTop_toBottomOf="@id/et_genre"
-                            app:met_baseColor="@android:color/white"
+                            app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/rating_kinopoisk"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -184,7 +194,6 @@
                     android:layout_marginTop="@dimen/item_movie_vertical_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_vertical_margin"
-                    android:padding="@dimen/item_movie_padding"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toTopOf="@id/plot"
@@ -207,8 +216,8 @@
                             app:met_floatingLabel="highlight"
                             app:met_floatingLabelAlwaysShown="true"
                             app:met_floatingLabelText="@string/tag"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentLight" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -233,7 +242,6 @@
                     android:layout_marginTop="@dimen/item_movie_vertical_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_vertical_margin"
-                    android:padding="@dimen/item_movie_padding"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toTopOf="@id/review"
@@ -251,9 +259,9 @@
                             android:inputType="textCapSentences|textMultiLine"
                             android:text="@{movie.plot}"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:met_baseColor="@android:color/white"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_baseColor="@color/colorAccentWhite"
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -278,7 +286,6 @@
                     android:layout_marginTop="@dimen/item_movie_vertical_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_horizontal_margin"
-                    android:padding="@dimen/item_movie_padding"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -296,9 +303,9 @@
                             android:inputType="textCapSentences|textMultiLine"
                             android:text="@{movie.comment}"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:met_baseColor="@android:color/white"
-                            app:met_primaryColor="@android:color/white"
-                            app:met_textColor="@android:color/white" />
+                            app:met_baseColor="@color/colorAccentWhite"
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -310,8 +317,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:layout_behavior="rmnvich.apps.kinonika.presentation.custom.FabBehaviour"
             android:layout_margin="@dimen/fab_margin"
+            app:layout_behavior="rmnvich.apps.kinonika.presentation.custom.FabBehaviour"
             app:srcCompat="@drawable/ic_action_check_inverted" />
 
     </android.support.design.widget.CoordinatorLayout>

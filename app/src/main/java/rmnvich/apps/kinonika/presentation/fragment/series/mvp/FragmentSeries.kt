@@ -1,6 +1,7 @@
 package rmnvich.apps.kinonika.presentation.fragment.series.mvp
 
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,6 +12,7 @@ import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentSeriesBinding
+import rmnvich.apps.kinonika.presentation.activity.review.ViewReviewActivity
 import javax.inject.Inject
 
 class FragmentSeries : Fragment(), FragmentSeriesContract.View {
@@ -29,6 +31,11 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_series, container, false)
         binding.handler = this
+
+        binding.fabAddSeries.setOnClickListener {
+            activity?.startActivityFromFragment(this,
+                    Intent(activity, ViewReviewActivity::class.java), 0)
+        }
 
         return binding.root
     }

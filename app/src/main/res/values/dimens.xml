@@ -10,4 +10,7 @@
     <dimen name="poster_size">110dp</dimen>
     <dimen name="poster_margin_end">15dp</dimen>
     <dimen name="divider_height">0.6dp</dimen>
+    <dimen name="review_poster_size">320dp</dimen>
+    <dimen name="poster_description_padding">10dp</dimen>
+    <dimen name="review_description_margin_top">5dp</dimen>
 </resources>

@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activity.make.MakeReview"></activity>
+        <activity android:name=".presentation.activity.make.MakeReviewActivity" />
+        <activity android:name=".presentation.activity.review.ViewReviewActivity"></activity>
     </application>
 
 </manifest>
