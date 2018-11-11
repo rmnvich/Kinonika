@@ -10,4 +10,7 @@
     <color name="itemColorBackground">#171717</color>
 
     <color name="colorBlackAlpha">#8c000000</color>
+
+    <color name="colorWhiteAlpha">#46d1c9ba</color>
+    <color name="colorWhiteAlpha2">#28d1c9ba</color>
 </resources>

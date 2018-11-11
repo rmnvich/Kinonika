@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -98,6 +99,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/poster_margin_end"
                             android:layout_marginTop="@dimen/item_movie_margin_top"
+                            android:inputType="textCapSentences"
                             android:text="@{movie.name}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +135,7 @@
                             android:id="@+id/et_country"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="textCapSentences"
                             android:text="@{movie.country}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:met_baseColor="@color/colorAccentWhite"
@@ -160,7 +163,7 @@
                             android:id="@+id/et_genre"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
+                            android:inputType="textCapSentences"
                             android:text="@{movie.genre}"
                             app:layout_constraintTop_toBottomOf="@id/et_year"
                             app:met_baseColor="@color/colorAccentWhite"
@@ -204,20 +207,25 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/item_movie_padding">
 
-                        <com.rengwuxian.materialedittext.MaterialEditText
+                        <TextView
+                            android:id="@+id/floating_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tag"
+                            android:textColor="@color/colorWhiteAlpha"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <MultiAutoCompleteTextView
                             android:id="@+id/et_tag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:inputType="textMultiLine"
+                            android:backgroundTint="@color/colorWhiteAlpha2"
+                            android:inputType="text"
                             android:text="@{movie.hashTags}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:met_baseColor="@android:color/white"
-                            app:met_floatingLabel="highlight"
-                            app:met_floatingLabelAlwaysShown="true"
-                            app:met_floatingLabelText="@string/tag"
-                            app:met_primaryColor="@color/colorAccentWhite"
-                            app:met_textColor="@color/colorAccentLight" />
+                            android:textColor="@color/colorAccentWhite"
+                            app:layout_constraintTop_toBottomOf="@id/floating_tag"
+                            tools:ignore="LabelFor" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 

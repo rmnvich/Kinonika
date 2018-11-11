@@ -16,9 +16,10 @@ data class Movie(
         var rating: Int,
         var year: Int,
         var country: String,
-        var genre: MutableList<Genre>,
+        var genre: String,
         var hashTags: MutableList<Tag>,
         var plot: String,
         var ratingIMDb: String,
-        var comment: String
+        var comment: String,
+        var movieType: Int
 )

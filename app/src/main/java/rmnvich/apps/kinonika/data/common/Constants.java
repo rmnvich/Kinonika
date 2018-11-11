@@ -10,4 +10,9 @@ public class Constants {
     public static int REQUEST_CODE_SERIES = 1;
     public static int REQUEST_CODE_TVSHOW = 2;
     public static int REQUEST_CODE_CARTOON = 3;
+
+    /*
+     * TODO: Search
+     * TODO: Filter by genre, year, county, rating
+     */
 }
