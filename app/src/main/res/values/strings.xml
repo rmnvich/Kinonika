@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Kinonika</string>
+    <string name="films">Films</string>
+    <string name="series">Series</string>
+    <string name="tv_show">TV Show</string>
+    <string name="cartoons">Cartoons</string>
 </resources>
