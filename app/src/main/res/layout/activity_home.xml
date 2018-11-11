@@ -5,7 +5,7 @@
 
         <variable
             name="handler"
-            type="rmnvich.apps.kinonika.HomeActivity" />
+            type="rmnvich.apps.kinonika.presentation.activity.home.mvp.HomeActivity" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             app:elevation="@dimen/bottom_nav_view_elevation"
-            app:itemIconTint="@color/bottom_nav_item_color"
+            app:itemIconTint="@color/colorAccent"
             app:itemTextColor="@color/colorAccentWhite"
             app:layout_insetEdge="bottom"
             app:menu="@menu/navigation_menu" />
