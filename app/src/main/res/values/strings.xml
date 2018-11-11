@@ -12,6 +12,7 @@
     <string name="country">Country:</string>
     <string name="year">Year:</string>
     <string name="genre">Genre:</string>
-    <string name="rating_kinopoisk">Rating kinopoisk:</string>
+    <string name="rating_kinopoisk">IMDb:</string>
     <string name="tag">Tag:</string>
+    <string name="make_review">Make review</string>
 </resources>

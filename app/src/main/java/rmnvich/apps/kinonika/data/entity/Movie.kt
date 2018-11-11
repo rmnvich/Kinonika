@@ -19,6 +19,6 @@ data class Movie(
         var genre: MutableList<Genre>,
         var hashTags: MutableList<Tag>,
         var plot: String,
-        var ratingKinopoisk: String,
+        var ratingIMDb: String,
         var comment: String
 )
