@@ -4,4 +4,14 @@
     <string name="series">Series</string>
     <string name="tv_show">TV Show</string>
     <string name="cartoons">Cartoons</string>
+    <string name="plot">Plot:</string>
+    <string name="comment">Comment:</string>
+    <string name="poster">poster</string>
+    <string name="review">Review:</string>
+    <string name="name">Name:</string>
+    <string name="country">Country:</string>
+    <string name="year">Year:</string>
+    <string name="genre">Genre:</string>
+    <string name="rating_kinopoisk">Rating kinopoisk:</string>
+    <string name="tag">Tag:</string>
 </resources>

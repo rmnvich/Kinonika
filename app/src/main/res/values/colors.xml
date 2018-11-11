@@ -7,4 +7,5 @@
     <color name="colorAccentWhite">#ccc2b0</color>
 
     <color name="colorBackground">#353535</color>
+    <color name="itemColorBackground">#171717</color>
 </resources>

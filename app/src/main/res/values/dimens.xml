@@ -2,4 +2,12 @@
 <resources>
     <dimen name="bottom_nav_view_elevation">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_movie_horizontal_margin">10dp</dimen>
+    <dimen name="item_movie_vertical_margin">5dp</dimen>
+    <dimen name="card_view_corner_radius">10dp</dimen>
+    <dimen name="item_movie_padding">15dp</dimen>
+    <dimen name="item_movie_margin_top">5dp</dimen>
+    <dimen name="poster_size">110dp</dimen>
+    <dimen name="poster_margin_end">15dp</dimen>
+    <item name="divider_height" type="dimen" format="float">0.6dp</item>
 </resources>

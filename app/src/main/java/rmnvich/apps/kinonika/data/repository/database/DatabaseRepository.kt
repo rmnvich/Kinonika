@@ -6,6 +6,7 @@ class DatabaseRepository(appDatabase: AppDatabase) {
 
     private val movieDao = appDatabase.movieDao()
     private val tagDao = appDatabase.tagDao()
+    private val genreDao = appDatabase.genreDao()
 
 
 }

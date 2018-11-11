@@ -1,6 +1,5 @@
 package rmnvich.apps.kinonika.presentation.activity.home
 
-import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
