@@ -17,7 +17,7 @@ data class Movie(
         var year: Int,
         var country: String,
         var genre: String,
-        var hashTags: MutableList<Tag>,
+        var hashTags: String,
         var plot: String,
         var ratingIMDb: String,
         var comment: String,
