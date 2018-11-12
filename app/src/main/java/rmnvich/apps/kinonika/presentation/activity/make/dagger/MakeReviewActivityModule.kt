@@ -38,5 +38,4 @@ class MakeReviewActivityModule(val context: Context) : BaseModule {
     fun provideLocalRepository() : LocalRepository {
         return LocalRepository(context)
     }
-
 }

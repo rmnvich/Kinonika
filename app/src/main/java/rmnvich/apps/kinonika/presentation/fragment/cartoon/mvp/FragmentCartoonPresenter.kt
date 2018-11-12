@@ -6,6 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
+import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity
 import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 
 class FragmentCartoonPresenter(private val compositeDisposable: CompositeDisposable,
@@ -32,7 +33,9 @@ class FragmentCartoonPresenter(private val compositeDisposable: CompositeDisposa
     }
 
     override fun onClickMovie(movieId: Long) {
-
+        (view as Fragment).startActivity(Intent((view as Fragment).context,
+                ViewReviewActivity::class.java)
+                .putExtra(EXTRA_MOVIE_ID, movieId))
     }
 
     override fun onLongClickMovie(movieId: Long, position: Int) {

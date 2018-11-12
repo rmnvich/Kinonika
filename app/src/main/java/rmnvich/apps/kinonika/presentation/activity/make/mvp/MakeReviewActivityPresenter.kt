@@ -12,7 +12,6 @@ import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 import java.io.IOException
 
-
 class MakeReviewActivityPresenter(
         private val compositeDisposable: CompositeDisposable,
         private val model: MakeReviewActivityModel) :

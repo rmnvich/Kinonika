@@ -4,9 +4,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
         <variable
             name="handler"
-            type="rmnvich.apps.kinonika.presentation.activity.review.ViewReviewActivity" />
+            type="rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity" />
 
         <variable
             name="movie"
@@ -66,8 +70,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/review_poster_size"
                             android:contentDescription="@string/poster"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/example" />
+                            android:scaleType="centerCrop" />
 
                         <TextView
                             android:id="@+id/tv_name"
@@ -78,7 +81,8 @@
                             android:padding="@dimen/poster_description_padding"
                             android:text="@{movie.name}"
                             android:textColor="@android:color/white"
-                            android:textSize="26sp" />
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -124,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/country"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -135,7 +139,7 @@
                             android:layout_marginStart="@dimen/review_description_margin_top"
                             android:text="@{movie.country}"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             app:layout_constraintStart_toEndOf="@id/country" />
 
                         <TextView
@@ -144,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/year"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_country" />
@@ -156,7 +160,7 @@
                             android:layout_marginStart="@dimen/review_description_margin_top"
                             android:text="@{movie.year}"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             app:layout_constraintStart_toEndOf="@id/year"
                             app:layout_constraintTop_toBottomOf="@id/tv_country" />
 
@@ -166,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/genre"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_year" />
@@ -178,7 +182,7 @@
                             android:layout_marginStart="@dimen/review_description_margin_top"
                             android:text="@{movie.genre}"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             app:layout_constraintStart_toEndOf="@id/genre"
                             app:layout_constraintTop_toBottomOf="@id/tv_year" />
 
@@ -189,6 +193,7 @@
                             android:layout_marginTop="@dimen/item_movie_margin_top"
                             android:alpha="0.2"
                             android:background="@color/colorAccentWhite"
+                            android:visibility="@{TextUtils.isEmpty(movie.hashTags) ? View.GONE : View.VISIBLE}"
                             app:layout_constraintTop_toBottomOf="@id/tv_genre" />
 
                         <TextView
@@ -198,7 +203,8 @@
                             android:layout_marginTop="@dimen/review_description_margin_top"
                             android:text="@{movie.hashTags}"
                             android:textColor="@color/colorAccentLight"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
+                            android:visibility="@{TextUtils.isEmpty(movie.hashTags) ? View.GONE : View.VISIBLE}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/divider" />
                     </android.support.constraint.ConstraintLayout>
@@ -211,7 +217,7 @@
                     android:layout_marginStart="@dimen/item_movie_horizontal_margin"
                     android:layout_marginTop="@dimen/item_movie_horizontal_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
-                    android:layout_marginBottom="@dimen/item_movie_vertical_margin"
+                    android:layout_marginBottom="@dimen/item_movie_horizontal_margin"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toTopOf="@id/card_view_review"
@@ -228,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/plot"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -239,7 +245,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{movie.plot}"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/plot" />
                     </android.support.constraint.ConstraintLayout>
@@ -250,9 +256,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/item_movie_horizontal_margin"
-                    android:layout_marginTop="@dimen/item_movie_horizontal_margin"
+                    android:layout_marginTop="@dimen/item_movie_vertical_margin"
                     android:layout_marginEnd="@dimen/item_movie_horizontal_margin"
                     android:layout_marginBottom="@dimen/item_movie_horizontal_margin"
+                    android:visibility="@{TextUtils.isEmpty(movie.comment) ? View.GONE : View.VISIBLE}"
                     app:cardBackgroundColor="@color/itemColorBackground"
                     app:cardCornerRadius="@dimen/card_view_corner_radius"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -269,7 +276,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/review"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -280,7 +287,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{movie.comment}"
                             android:textColor="@color/colorAccentWhite"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/view_review_text_size"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/review" />
                     </android.support.constraint.ConstraintLayout>
@@ -288,5 +295,16 @@
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/progress_bar"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:indicatorColor="@color/colorAccentLight"
+            app:indicatorName="BallTrianglePathIndicator" />
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>

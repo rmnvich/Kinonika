@@ -25,7 +25,7 @@
         <activity
             android:name=".presentation.activity.make.mvp.MakeReviewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".presentation.activity.review.ViewReviewActivity" />
+        <activity android:name=".presentation.activity.review.mvp.ViewReviewActivity" />
     </application>
 
 </manifest>

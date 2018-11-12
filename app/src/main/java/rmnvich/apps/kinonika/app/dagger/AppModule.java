@@ -14,6 +14,8 @@ import rmnvich.apps.kinonika.presentation.activity.home.dagger.HomeActivityCompo
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity;
 import rmnvich.apps.kinonika.presentation.activity.make.dagger.MakeReviewActivityComponent;
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity;
+import rmnvich.apps.kinonika.presentation.activity.review.dagger.ReviewActivityComponent;
+import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity;
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonComponent;
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoon;
 import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmComponent;
@@ -24,7 +26,8 @@ import rmnvich.apps.kinonika.presentation.fragment.tvshow.dagger.FragmentTVShowC
 import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow;
 
 @Module(subcomponents = {HomeActivityComponent.class, FragmentFilmComponent.class, FragmentSeriesComponent.class,
-        FragmentTVShowComponent.class, FragmentCartoonComponent.class, MakeReviewActivityComponent.class})
+        FragmentTVShowComponent.class, FragmentCartoonComponent.class, MakeReviewActivityComponent.class,
+        ReviewActivityComponent.class})
 public class AppModule {
 
     private final Context mContext;
@@ -93,4 +96,10 @@ public class AppModule {
         return builder;
     }
 
+    @Provides
+    @IntoMap
+    @ClassKey(ViewReviewActivity.class)
+    BaseComponentBuilder provideViewReviewActivity(ReviewActivityComponent.Builder builder) {
+        return builder;
+    }
 }

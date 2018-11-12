@@ -1,7 +1,6 @@
 package rmnvich.apps.kinonika.presentation.fragment.series.mvp
 
 import android.content.Context
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -15,8 +14,6 @@ import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentSeriesBinding
-import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
-import rmnvich.apps.kinonika.presentation.activity.review.ViewReviewActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import javax.inject.Inject
 
