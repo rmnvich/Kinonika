@@ -12,7 +12,7 @@ import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
-import rmnvich.apps.kinonika.presentation.activity.make.MakeReviewActivity
+import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import javax.inject.Inject
 
 class FragmentFilm : Fragment(), FragmentFilmContract.View {

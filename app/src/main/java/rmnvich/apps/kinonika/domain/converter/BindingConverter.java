@@ -10,11 +10,13 @@ public class BindingConverter {
 
     @BindingConversion
     public static String convertTagsToString(List<Tag> tags) {
-        StringBuilder sb = new StringBuilder();
-        for (Tag tag : tags) {
-            if (sb.length() > 0) sb.append(" ");
-            sb.append(tag.getHashTag());
-        }
-        return sb.toString();
+        if (tags != null) {
+            StringBuilder sb = new StringBuilder();
+            for (Tag tag : tags) {
+                if (sb.length() > 0) sb.append(" ");
+                sb.append(tag.getHashTag());
+            }
+            return sb.toString();
+        } else return "";
     }
 }

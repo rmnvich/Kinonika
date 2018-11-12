@@ -5,9 +5,11 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="handler"
-            type="rmnvich.apps.kinonika.presentation.activity.make.MakeReviewActivity" />
+            type="rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity" />
 
         <variable
             name="movie"
@@ -65,20 +67,23 @@
 
                         <android.support.v7.widget.CardView
                             android:id="@+id/card_view_poster"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardBackgroundColor="@color/colorAccent"
+                            android:layout_width="@dimen/poster_size"
+                            android:layout_height="@dimen/poster_size"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:onClick="@{(view) -> handler.onClickPoster()}"
+                            app:cardBackgroundColor="@color/colorPrimary"
                             app:cardCornerRadius="@dimen/card_view_corner_radius"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
                                 android:id="@+id/iv_poster"
-                                android:layout_width="@dimen/poster_size"
-                                android:layout_height="@dimen/poster_size"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:contentDescription="@string/poster"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/example" />
+                                android:scaleType="centerCrop" />
                         </android.support.v7.widget.CardView>
 
                         <RatingBar
@@ -87,8 +92,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/poster_margin_end"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:isIndicator="false"
                             android:numStars="5"
-                            android:rating="@{movie.rating}"
+                            android:rating="@={movie.rating}"
                             android:stepSize="1"
                             app:layout_constraintStart_toEndOf="@id/card_view_poster"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +108,7 @@
                             android:layout_marginStart="@dimen/poster_margin_end"
                             android:layout_marginTop="@dimen/item_movie_margin_top"
                             android:inputType="textCapSentences"
-                            android:text="@{movie.name}"
+                            android:text="@={movie.name}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/card_view_poster"
@@ -136,7 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapSentences"
-                            android:text="@{movie.country}"
+                            android:text="@={movie.country}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
@@ -150,7 +158,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text|number"
-                            android:text="@{String.valueOf(movie.year)}"
+                            android:text='@{movie.year == 0 ? "" : String.valueOf(movie.year)}'
                             app:layout_constraintTop_toBottomOf="@id/et_country"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
@@ -159,12 +167,12 @@
                             app:met_primaryColor="@color/colorAccentWhite"
                             app:met_textColor="@color/colorAccentWhite" />
 
-                        <com.rengwuxian.materialedittext.MaterialEditText
+                        <com.rengwuxian.materialedittext.MaterialMultiAutoCompleteTextView
                             android:id="@+id/et_genre"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapSentences"
-                            android:text="@{movie.genre}"
+                            android:text="@={movie.genre}"
                             app:layout_constraintTop_toBottomOf="@id/et_year"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
@@ -178,7 +186,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
-                            android:text="@{movie.ratingIMDb}"
+                            android:text="@={movie.ratingIMDb}"
                             app:layout_constraintTop_toBottomOf="@id/et_genre"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_floatingLabel="highlight"
@@ -207,25 +215,19 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/item_movie_padding">
 
-                        <TextView
-                            android:id="@+id/floating_tag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tag"
-                            android:textColor="@color/colorWhiteAlpha"
-                            android:textSize="12sp"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <MultiAutoCompleteTextView
+                        <com.rengwuxian.materialedittext.MaterialMultiAutoCompleteTextView
                             android:id="@+id/et_tag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/colorWhiteAlpha2"
                             android:inputType="text"
-                            android:text="@{movie.hashTags}"
-                            android:textColor="@color/colorAccentWhite"
-                            app:layout_constraintTop_toBottomOf="@id/floating_tag"
-                            tools:ignore="LabelFor" />
+                            android:text="@={movie.hashTags}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:met_baseColor="@color/colorAccentWhite"
+                            app:met_floatingLabel="highlight"
+                            app:met_floatingLabelAlwaysShown="true"
+                            app:met_floatingLabelText="@string/tag"
+                            app:met_primaryColor="@color/colorAccentWhite"
+                            app:met_textColor="@color/colorAccentWhite" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
@@ -265,7 +267,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapSentences|textMultiLine"
-                            android:text="@{movie.plot}"
+                            android:text="@={movie.plot}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_primaryColor="@color/colorAccentWhite"
@@ -309,7 +311,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapSentences|textMultiLine"
-                            android:text="@{movie.comment}"
+                            android:text="@={movie.comment}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:met_baseColor="@color/colorAccentWhite"
                             app:met_primaryColor="@color/colorAccentWhite"
@@ -320,12 +322,23 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
 
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/progress_bar"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:indicatorColor="@color/colorAccentLight"
+            app:indicatorName="BallTrianglePathIndicator" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{(view) -> handler.onClickApply()}"
             app:layout_behavior="rmnvich.apps.kinonika.presentation.custom.FabBehaviour"
             app:srcCompat="@drawable/ic_action_check_inverted" />
 

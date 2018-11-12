@@ -20,8 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activity.make.MakeReviewActivity" />
-        <activity android:name=".presentation.activity.review.ViewReviewActivity"></activity>
+        <activity
+            android:name=".presentation.activity.make.mvp.MakeReviewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".presentation.activity.review.ViewReviewActivity" />
     </application>
 
 </manifest>
