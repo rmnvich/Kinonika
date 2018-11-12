@@ -10,8 +10,9 @@ import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 import java.io.IOException
 
 
-class MakeReviewActivityPresenter(val compositeDisposable: CompositeDisposable,
-                                  val model: MakeReviewActivityModel) :
+class MakeReviewActivityPresenter(
+        private val compositeDisposable: CompositeDisposable,
+        private val model: MakeReviewActivityModel) :
         PresenterBase<MakeReviewActivityContract.View>(), MakeReviewActivityContract.Presenter {
 
     private var movieId: Long = -1L
@@ -42,30 +43,49 @@ class MakeReviewActivityPresenter(val compositeDisposable: CompositeDisposable,
 
     override fun onClickPoster() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK).setType("image/*")
-        (view as Activity).startActivityForResult(Intent.createChooser(photoPickerIntent,
-                getString(R.string.select_a_file)), REQUEST_CODE_POSTER)
+        (view as Activity).startActivityForResult(
+                Intent.createChooser(
+                        photoPickerIntent, getString(R.string.select_a_file)
+                ), REQUEST_CODE_POSTER
+        )
     }
 
     override fun onActivityResult(data: Intent?) {
         try {
-            val bitmap = model.getBitmapFromGallery(data)
-            view?.setBitmap(bitmap)
+            view?.showProgress()
+            val disposable = model.getFilePath(data)
+                    .subscribe {
+                        view?.setBitmap(it)
+                        view?.hideProgress()
+                    }
+            compositeDisposable.add(disposable)
         } catch (e: IOException) {
-            view?.setBitmap(null)
+            view?.setBitmap("")
             view?.showMessage(getString(R.string.error))
         }
     }
 
     override fun onClickApply(movie: Movie) {
-        view?.showProgress()
-        val disposable = model.addMovie(movie)
-                .subscribe({
-                    view?.hideProgress()
-                    (view as Activity).finish()
-                }, {
-                    view?.hideProgress()
-                    view?.showMessage(getString(R.string.error))
-                })
-        compositeDisposable.add(disposable)
+        if (isDataCorrect(movie)) {
+            view?.showProgress()
+            val disposable = model.addMovie(movie)
+                    .subscribe({
+                        view?.hideProgress()
+                        (view as Activity).finish()
+                    }, {
+                        view?.hideProgress()
+                        view?.showMessage(getString(R.string.error))
+                    })
+            compositeDisposable.add(disposable)
+        } else view?.showMessage(getString(R.string.empty_field_error))
+    }
+
+    override fun isDataCorrect(movie: Movie): Boolean {
+        return !(movie.name.isEmpty() ||
+                movie.country.isEmpty() ||
+                movie.year.isEmpty() ||
+                movie.genre.isEmpty() ||
+                movie.ratingIMDb.isEmpty() ||
+                movie.plot.isEmpty())
     }
 }

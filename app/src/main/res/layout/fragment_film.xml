@@ -39,12 +39,23 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_movie" />
 
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/progress_bar"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:indicatorColor="@color/colorAccentLight"
+            app:indicatorName="BallTrianglePathIndicator" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            app:layout_behavior="rmnvich.apps.kinonika.presentation.custom.FabBehaviour"
             app:srcCompat="@drawable/ic_action_add_inverted" />
 
     </android.support.design.widget.CoordinatorLayout>

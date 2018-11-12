@@ -18,4 +18,6 @@
     <string name="review_title">Review</string>
     <string name="error">Error occurred</string>
     <string name="select_a_file">Select a media file</string>
+    <string name="empty_field_error">Please fill in all fields</string>
+    <string name="delete_image">Delete image</string>
 </resources>

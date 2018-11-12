@@ -1,6 +1,7 @@
 package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
 
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
+import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentTvshowBinding
+import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import javax.inject.Inject
 
 class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
@@ -29,6 +32,11 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tvshow, container, false)
         binding.handler = this
+
+        binding.fabAddTvshow.setOnClickListener {
+            activity?.startActivity(Intent(activity, MakeReviewActivity::class.java)
+                    .putExtra(EXTRA_MOVIE_TYPE, REQUEST_CODE_TVSHOW))
+        }
 
         return binding.root
     }

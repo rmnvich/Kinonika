@@ -1,26 +1,39 @@
 package rmnvich.apps.kinonika.presentation.activity.make.mvp
 
 import android.content.Intent
-import android.graphics.Bitmap
+import android.net.Uri
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
 import rmnvich.apps.kinonika.data.repository.local.LocalRepository
+import java.util.concurrent.Callable
 
-class MakeReviewActivityModel(val databaseRepository: DatabaseRepository,
-                              val localRepository: LocalRepository) :
+class MakeReviewActivityModel(
+        private val databaseRepository: DatabaseRepository,
+        private val localRepository: LocalRepository) :
         MakeReviewActivityContract.Model {
 
     override fun getMovieById(movieId: Long): Single<Movie> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return databaseRepository.getMovieById(movieId)
     }
 
     override fun addMovie(movie: Movie): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return databaseRepository.addMovie(movie)
     }
 
-    override fun getBitmapFromGallery(data: Intent?): Bitmap {
-        return localRepository.getBitmap(data?.data)
+    override fun getFilePath(data: Intent?): Observable<String> {
+        return Observable.fromCallable(CallableBitmapAction(data?.data!!))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    inner class CallableBitmapAction(private var uri: Uri) : Callable<String> {
+        override fun call(): String {
+            return localRepository.saveToInternalStorage(uri)
+        }
     }
 }

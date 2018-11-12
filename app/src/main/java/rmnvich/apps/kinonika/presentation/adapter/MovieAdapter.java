@@ -32,7 +32,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void setData(List<Movie> data) {
         mMovieList = data;
         mMovieFilteredList = data;
-        notifyDataSetChanged();
+        updateWithAnimations();
     }
 
     public void setActionType(int actionType) {
@@ -110,7 +110,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public interface OnClickMovieListener {
         void onClickMovie(long movieId);
 
-        void onLongClickMovie(long movieId);
+        void onLongClickMovie(long movieId, int position);
     }
 
     public void setOnClickMovieListener(OnClickMovieListener listener) {
@@ -122,7 +122,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         ItemMovieBinding binding;
 
-        public ViewHolder(ItemMovieBinding binding) {
+        ViewHolder(ItemMovieBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
@@ -142,8 +142,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         @Override
         public boolean onLongClick(View view) {
-            mListener.onClickMovie(mMovieFilteredList.get(getAdapterPosition()).getId());
-            return true;
+            mListener.onLongClickMovie(mMovieFilteredList.get(getAdapterPosition())
+                    .getId(), getAdapterPosition());
+            return false;
         }
     }
 }

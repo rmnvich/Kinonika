@@ -5,6 +5,7 @@ import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.data.di.base.BaseModule
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
+import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoonModel
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoonPresenter
 
@@ -28,5 +29,11 @@ class FragmentCartoonModule : BaseModule {
     @Provides
     fun provideModel(databaseRepository: DatabaseRepository) : FragmentCartoonModel {
         return FragmentCartoonModel(databaseRepository)
+    }
+
+    @PerFragmentCartoon
+    @Provides
+    fun provideAdapter() : MovieAdapter {
+        return MovieAdapter()
     }
 }

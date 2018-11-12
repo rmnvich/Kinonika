@@ -2,7 +2,9 @@ package rmnvich.apps.kinonika.presentation.activity.make.mvp
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.presentation.mvp.MvpModel
@@ -17,7 +19,7 @@ interface MakeReviewActivityContract {
 
         fun setMovie(movie: Movie)
 
-        fun setBitmap(bitmap: Bitmap?)
+        fun setBitmap(filePath: String)
 
         fun onClickPoster()
 
@@ -33,11 +35,13 @@ interface MakeReviewActivityContract {
         fun onActivityResult(data: Intent?)
 
         fun onClickApply(movie: Movie)
+
+        fun isDataCorrect(movie: Movie) : Boolean
     }
 
     interface Model : MvpModel {
 
-        fun getBitmapFromGallery(data: Intent?) : Bitmap
+        fun getFilePath(data: Intent?) : Observable<String>
 
         fun getMovieById(movieId: Long): Single<Movie>
 

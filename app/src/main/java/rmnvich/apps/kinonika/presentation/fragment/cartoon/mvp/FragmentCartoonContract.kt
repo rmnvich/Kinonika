@@ -10,15 +10,26 @@ interface FragmentCartoonContract {
 
     interface View : MvpView {
 
-        fun setMovieToAdapter(movies: List<Movie>)
+        fun uodateAdapter(movies: List<Movie>)
+
+        fun setAnimationTypeToAdapter(position: Int, animationType: Int)
+
+        fun showMessage(text: String)
     }
 
     interface Presenter : MvpPresenter<View> {
 
+        fun onFabClicked()
+
+        fun onClickMovie(movieId: Long)
+
+        fun onLongClickMovie(movieId: Long, position: Int)
+
+        fun setMovieType(movieType: Int)
     }
 
     interface Model : MvpModel {
 
-        fun getAllCartoons(): Flowable<List<Movie>>
+        fun getAllCartoons(movieType: Int): Flowable<List<Movie>>
     }
 }

@@ -1,50 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="handler"
-                type="rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow"/>
+            name="handler"
+            type="rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow" />
     </data>
 
 
     <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
         <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
 
             <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_scrollFlags="enterAlways"
-                    app:navigationIcon="@drawable/ic_action_tvshow_inverted"
-                    app:title="@string/tv_show"
-                    app:titleTextColor="@android:color/white"/>
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="enterAlways"
+                app:navigationIcon="@drawable/ic_action_tvshow_inverted"
+                app:title="@string/tv_show"
+                app:titleTextColor="@android:color/white" />
 
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_tvshow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/item_movie"/>
+            android:id="@+id/recycler_tvshow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_movie" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/progress_bar"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:indicatorColor="@color/colorAccentLight"
+            app:indicatorName="BallTrianglePathIndicator" />
 
         <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_add_tvshow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_action_add_inverted"/>
+            android:id="@+id/fab_add_tvshow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:layout_behavior="rmnvich.apps.kinonika.presentation.custom.FabBehaviour"
+            app:srcCompat="@drawable/ic_action_add_inverted" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

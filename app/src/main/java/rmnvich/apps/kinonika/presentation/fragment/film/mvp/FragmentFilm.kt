@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
+import rmnvich.apps.kinonika.data.common.Constants.EXTRA_MOVIE_TYPE
+import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_FILM
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
@@ -33,8 +35,8 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
         binding.handler = this
 
         binding.fabAddFilm.setOnClickListener {
-            activity?.startActivityFromFragment(this,
-                Intent(activity, MakeReviewActivity::class.java), 0)
+            activity?.startActivity(Intent(activity, MakeReviewActivity::class.java)
+                    .putExtra(EXTRA_MOVIE_TYPE, REQUEST_CODE_FILM))
         }
 
         return binding.root

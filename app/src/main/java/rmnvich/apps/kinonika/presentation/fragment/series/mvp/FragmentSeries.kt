@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
+import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentSeriesBinding
+import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import rmnvich.apps.kinonika.presentation.activity.review.ViewReviewActivity
 import javax.inject.Inject
 
@@ -33,8 +35,8 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
         binding.handler = this
 
         binding.fabAddSeries.setOnClickListener {
-            activity?.startActivityFromFragment(this,
-                    Intent(activity, ViewReviewActivity::class.java), 0)
+            activity?.startActivity(Intent(activity, MakeReviewActivity::class.java)
+                    .putExtra(EXTRA_MOVIE_TYPE, REQUEST_CODE_SERIES))
         }
 
         return binding.root
