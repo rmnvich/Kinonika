@@ -16,4 +16,6 @@
     <string name="tag">Tag:</string>
     <string name="make_review">Make review</string>
     <string name="review_title">Review</string>
+    <string name="error">Error occurred</string>
+    <string name="select_a_file">Select a media file</string>
 </resources>

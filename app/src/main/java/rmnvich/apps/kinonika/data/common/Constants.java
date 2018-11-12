@@ -10,6 +10,9 @@ public class Constants {
     public static int REQUEST_CODE_SERIES = 1;
     public static int REQUEST_CODE_TVSHOW = 2;
     public static int REQUEST_CODE_CARTOON = 3;
+    public static int REQUEST_CODE_POSTER = 4;
+
+    public static String EXTRA_MOVIE_ID = "movie_id";
 
     /*
      * TODO: Search
