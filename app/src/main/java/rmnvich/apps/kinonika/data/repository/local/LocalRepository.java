@@ -1,23 +1,19 @@
 package rmnvich.apps.kinonika.data.repository.local;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.media.ExifInterface;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 
 public class LocalRepository {
@@ -45,12 +41,17 @@ public class LocalRepository {
         return result;
     }
 
-    public String saveToInternalStorage(Uri contentUri) {
+    public String saveToInternalStorage(Uri contentUri, String realPath) {
         try {
             Bitmap loadedBitmap = MediaStore.Images.Media
                     .getBitmap(mContext.getContentResolver(), contentUri);
-            ContextWrapper cw = new ContextWrapper(mContext);
 
+            ExifInterface originalExif = new ExifInterface(realPath);
+            int orientation = originalExif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+            loadedBitmap = rotateBitmap(loadedBitmap, orientation);
+
+            ContextWrapper cw = new ContextWrapper(mContext);
             File directory = cw.getDir("Posters", Context.MODE_PRIVATE);
             if (!directory.exists()) {
                 directory.mkdir();
@@ -62,6 +63,8 @@ public class LocalRepository {
 
             FileOutputStream fos;
             fos = new FileOutputStream(file);
+
+            assert loadedBitmap != null;
             loadedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.close();
 

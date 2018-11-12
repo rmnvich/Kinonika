@@ -23,7 +23,7 @@ class FragmentCartoonPresenter(private val compositeDisposable: CompositeDisposa
         val disposable = model.getAllCartoons(movieType)
                 .subscribe({
                     view?.hideProgress()
-                    view?.uodateAdapter(it)
+                    view?.updateAdapter(it)
                 }, {
                     view?.hideProgress()
                     view?.showMessage(getString(R.string.error))
@@ -54,5 +54,4 @@ class FragmentCartoonPresenter(private val compositeDisposable: CompositeDisposa
         super.detachView()
         compositeDisposable.dispose()
     }
-
 }

@@ -75,7 +75,7 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
                 .getComponent(javaClass).inject(this)
     }
 
-    override fun uodateAdapter(movies: List<Movie>) {
+    override fun updateAdapter(movies: List<Movie>) {
         mAdapter.setData(movies)
     }
 

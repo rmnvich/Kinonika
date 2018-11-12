@@ -26,14 +26,22 @@ class MakeReviewActivityModel(
     }
 
     override fun getFilePath(data: Intent?): Observable<String> {
-        return Observable.fromCallable(CallableBitmapAction(data?.data!!))
+        return Observable.fromCallable(CallableBitmapAction(data?.data!!, getRealPath(data)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    inner class CallableBitmapAction(private var uri: Uri) : Callable<String> {
+    override fun getRealPath(data: Intent?): String {
+        return localRepository.getRealPathFromUri(data?.data)
+    }
+
+    inner class CallableBitmapAction(
+            private var uri: Uri,
+            private var realPath: String) :
+            Callable<String> {
+
         override fun call(): String {
-            return localRepository.saveToInternalStorage(uri)
+            return localRepository.saveToInternalStorage(uri, realPath)
         }
     }
 }

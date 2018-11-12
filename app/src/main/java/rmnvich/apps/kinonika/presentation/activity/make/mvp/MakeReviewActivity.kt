@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants.*
@@ -32,14 +33,14 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
-                this,
-                R.layout.activity_make_review
+            this,
+            R.layout.activity_make_review
         )
         binding.handler = this
 
         App.getApp(this).componentsHolder.getComponent(
-                javaClass,
-                MakeReviewActivityModule(this)
+            javaClass,
+            MakeReviewActivityModule(this)
         ).inject(this)
     }
 
@@ -52,9 +53,9 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         mPresenter.attachView(this)
         if (intent.extras != null) {
             mPresenter.setMovieId(
-                    intent.getLongExtra(
-                            EXTRA_MOVIE_ID, -1L
-                    )
+                intent.getLongExtra(
+                    EXTRA_MOVIE_ID, -1L
+                )
             )
         }
         mPresenter.viewIsReady()
@@ -62,7 +63,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
 
     override fun setMovie(movie: Movie) {
         movie.movieType = intent.extras
-                .getInt(EXTRA_MOVIE_TYPE, -1)
+            .getInt(EXTRA_MOVIE_TYPE, -1)
         setBitmap(movie.poster)
 
         binding.movie = movie
@@ -89,7 +90,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_POSTER && resultCode ==
-                Activity.RESULT_OK && data != null
+            Activity.RESULT_OK && data != null
         ) {
             mPresenter.onActivityResult(data)
         }
@@ -111,7 +112,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         super.onDestroy()
         if (isFinishing) {
             App.getApp(this).componentsHolder
-                    .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
             mPresenter.detachView()
         }
     }

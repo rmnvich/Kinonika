@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
         binding.handler = this
 
         App.getApp(this).componentsHolder
-            .getComponent(javaClass).inject(this)
+                .getComponent(javaClass).inject(this)
     }
 
     @Inject
@@ -62,16 +62,16 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showFragment() {
         mFragmentManager.beginTransaction()
-            .replace(R.id.content, mActiveFragment)
-            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-            .commit()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, mActiveFragment)
+                .commit()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (isFinishing) {
             App.getApp(this).componentsHolder
-                .releaseComponent(javaClass)
+                    .releaseComponent(javaClass)
         }
     }
 }

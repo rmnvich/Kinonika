@@ -4,6 +4,10 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
         <variable
             name="movie"
             type="rmnvich.apps.kinonika.data.entity.Movie" />
@@ -80,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:lines="2"
+                android:maxLines="2"
                 android:text="@{movie.plot}"
                 android:textColor="@color/colorAccentWhite"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +99,7 @@
                 android:text="@string/comment"
                 android:textColor="@color/colorAccentWhite"
                 android:textStyle="italic"
+                android:visibility="@{TextUtils.isEmpty(movie.comment) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/tv_plot" />
 
             <TextView
@@ -102,9 +107,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:lines="2"
+                android:maxLines="2"
                 android:text="@{movie.comment}"
                 android:textColor="@color/colorAccentWhite"
+                android:visibility="@{TextUtils.isEmpty(movie.comment) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/comment" />
 

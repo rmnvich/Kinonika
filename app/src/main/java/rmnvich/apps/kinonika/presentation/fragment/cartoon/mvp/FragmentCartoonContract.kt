@@ -10,7 +10,7 @@ interface FragmentCartoonContract {
 
     interface View : MvpView {
 
-        fun uodateAdapter(movies: List<Movie>)
+        fun updateAdapter(movies: List<Movie>)
 
         fun setAnimationTypeToAdapter(position: Int, animationType: Int)
 

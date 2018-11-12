@@ -32,6 +32,10 @@ interface MakeReviewActivityContract {
 
         fun onClickPoster()
 
+        fun requestPermissions()
+
+        fun showImageDialog()
+
         fun onActivityResult(data: Intent?)
 
         fun onClickApply(movie: Movie)
@@ -42,6 +46,8 @@ interface MakeReviewActivityContract {
     interface Model : MvpModel {
 
         fun getFilePath(data: Intent?) : Observable<String>
+
+        fun getRealPath(data: Intent?) : String
 
         fun getMovieById(movieId: Long): Single<Movie>
 

@@ -4,9 +4,11 @@ import io.reactivex.Flowable
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
 
-class FragmentFilmModel(val databaseRepository: DatabaseRepository) : FragmentFilmContract.Model {
+class FragmentFilmModel(
+        private val databaseRepository: DatabaseRepository) :
+        FragmentFilmContract.Model {
 
-    override fun getAllFilms(): Flowable<List<Movie>> {
-        TODO("not implemented")
+    override fun getAllFilms(movieType: Int): Flowable<List<Movie>> {
+        return databaseRepository.getAllMovies(movieType)
     }
 }

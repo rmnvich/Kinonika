@@ -1,7 +1,10 @@
 package rmnvich.apps.kinonika.presentation.activity.make.mvp
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.support.v4.app.FragmentActivity
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_POSTER
@@ -15,7 +18,13 @@ class MakeReviewActivityPresenter(
         private val model: MakeReviewActivityModel) :
         PresenterBase<MakeReviewActivityContract.View>(), MakeReviewActivityContract.Presenter {
 
+    private var mRxPermissions: RxPermissions? = null
     private var movieId: Long = -1L
+
+    override fun attachView(mvpView: MakeReviewActivityContract.View) {
+        super.attachView(mvpView)
+        mRxPermissions = RxPermissions((view as FragmentActivity))
+    }
 
     override fun detachView() {
         super.detachView()
@@ -41,13 +50,17 @@ class MakeReviewActivityPresenter(
         } else view?.setMovie(Movie())
     }
 
-    override fun onClickPoster() {
+    override fun showImageDialog() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK).setType("image/*")
         (view as Activity).startActivityForResult(
                 Intent.createChooser(
                         photoPickerIntent, getString(R.string.select_a_file)
                 ), REQUEST_CODE_POSTER
         )
+    }
+
+    override fun onClickPoster() {
+        requestPermissions()
     }
 
     override fun onActivityResult(data: Intent?) {
@@ -87,5 +100,15 @@ class MakeReviewActivityPresenter(
                 movie.genre.isEmpty() ||
                 movie.ratingIMDb.isEmpty() ||
                 movie.plot.isEmpty())
+    }
+
+    override fun requestPermissions() {
+        val disposable = mRxPermissions?.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ?.subscribe { permission ->
+                    if (permission) {
+                        showImageDialog()
+                    } else view?.showMessage(getString(R.string.error))
+                }
+        compositeDisposable.add(disposable!!)
     }
 }

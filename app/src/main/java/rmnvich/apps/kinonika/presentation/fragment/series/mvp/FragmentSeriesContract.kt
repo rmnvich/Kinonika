@@ -10,15 +10,26 @@ interface FragmentSeriesContract {
 
     interface View : MvpView {
 
-        fun setMovieToAdapter(movies: List<Movie>)
+        fun updateAdapter(movies: List<Movie>)
+
+        fun setAnimationTypeToAdapter(position: Int, animationType: Int)
+
+        fun showMessage(text: String)
     }
 
     interface Presenter : MvpPresenter<View> {
 
+        fun onFabClicked()
+
+        fun onClickMovie(movieId: Long)
+
+        fun onLongClickMovie(movieId: Long, position: Int)
+
+        fun setMovieType(movieType: Int)
     }
 
     interface Model : MvpModel {
 
-        fun getAllSeries(): Flowable<List<Movie>>
+        fun getAllSeries(movieType: Int): Flowable<List<Movie>>
     }
 }
