@@ -13,6 +13,8 @@ import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentFilm
 import rmnvich.apps.kinonika.presentation.fragment.series.mvp.FragmentSeries
 import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow
 import javax.inject.Inject
+import rmnvich.apps.kinonika.presentation.custom.OnBackPressedListener
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -32,6 +34,12 @@ class HomeActivity : AppCompatActivity() {
 
     private val mFragmentManager = supportFragmentManager
     private var mActiveFragment: Fragment? = null
+
+    private var onBackPressedListener: OnBackPressedListener? = null
+
+    fun setOnBackPressedListener(onBackPressedListener: OnBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +73,12 @@ class HomeActivity : AppCompatActivity() {
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, mActiveFragment)
                 .commit()
+    }
+
+    override fun onBackPressed() {
+        if (onBackPressedListener != null)
+            onBackPressedListener?.doBack()
+        else super.onBackPressed()
     }
 
     override fun onDestroy() {

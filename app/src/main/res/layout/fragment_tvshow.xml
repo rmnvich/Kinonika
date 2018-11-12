@@ -18,19 +18,33 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="enterAlways"
-                app:navigationIcon="@drawable/ic_action_tvshow_inverted"
-                app:title="@string/tv_show"
-                app:titleTextColor="@android:color/white" />
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll">
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.AppCompat.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:navigationIcon="@drawable/ic_action_tvshow_inverted"
+                    app:title="@string/tv_show"
+                    app:titleTextColor="@android:color/white" />
+
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorAccentWhite"
+                    android:visibility="visible" />
+            </FrameLayout>
         </android.support.design.widget.AppBarLayout>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_tvshow"
             android:layout_width="match_parent"

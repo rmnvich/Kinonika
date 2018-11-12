@@ -3,20 +3,23 @@ package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentTvshowBinding
+import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
+import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
 import javax.inject.Inject
 
 class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
@@ -39,10 +42,22 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tvshow, container, false)
         binding.handler = this
 
+        (activity as HomeActivity).setSupportActionBar(binding.toolbar)
+        (activity as HomeActivity).setOnBackPressedListener(object :
+                BaseBackPressedListener(activity as FragmentActivity) {
+            override fun doBack() {
+                if (binding.searchView.isSearchOpen) {
+                    binding.searchView.closeSearch()
+                    return
+                }
+                super.doBack()
+            }
+        })
+        setHasOptionsMenu(true)
+
         binding.recyclerTvshow.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
         binding.recyclerTvshow.adapter = mAdapter
-
         mAdapter.setOnClickMovieListener(object : MovieAdapter.OnClickMovieListener {
             override fun onClickMovie(movieId: Long) {
                 mPresenter.onClickMovie(movieId)
@@ -56,8 +71,31 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
         binding.fabAddTvshow.setOnClickListener {
             mPresenter.onFabClicked()
         }
-
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu?.clear()
+        inflater?.inflate(R.menu.search_menu, menu)
+        val item = menu?.findItem(R.id.action_search)
+
+        binding.searchView.clearFocus()
+        binding.searchView.setMenuItem(item)
+        binding.searchView.setBackgroundColor(Color.BLACK)
+        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted))
+        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted))
+        binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                mAdapter.filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                mAdapter.filter.filter(newText)
+                return false
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,16 +125,22 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
     }
 
     override fun showProgress() {
-        binding.progressBar.smoothToShow()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        binding.progressBar.smoothToHide()
+        binding.progressBar.hide()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.searchView.closeSearch()
     }
 
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext)
                 .componentsHolder.releaseComponent(javaClass)
+        mPresenter.detachView()
     }
 }

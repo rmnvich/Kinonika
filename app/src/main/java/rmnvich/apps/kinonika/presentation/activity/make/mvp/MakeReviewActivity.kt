@@ -93,11 +93,11 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     }
 
     override fun showProgress() {
-        binding.progressBar.smoothToShow()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        binding.progressBar.smoothToHide()
+        binding.progressBar.hide()
     }
 
     override fun onDestroy() {
