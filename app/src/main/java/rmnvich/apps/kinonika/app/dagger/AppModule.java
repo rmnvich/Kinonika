@@ -51,7 +51,7 @@ public class AppModule {
     @Provides
     AppDatabase provideAppDatabase() {
         return Room.databaseBuilder(mContext, AppDatabase.class,
-                "testDatabase17").build();
+                "testDatabase19").build();
     }
 
     @Provides
