@@ -6,6 +6,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import rmnvich.apps.kinonika.data.entity.Movie
+import rmnvich.apps.kinonika.data.entity.Tag
 import rmnvich.apps.kinonika.data.repository.database.utils.AppDatabase
 import java.util.concurrent.TimeUnit
 
@@ -14,10 +15,31 @@ class DatabaseRepository(appDatabase: AppDatabase) {
     private val movieDao = appDatabase.movieDao()
     private val tagDao = appDatabase.tagDao()
 
-    fun addMovie(movie: Movie): Completable {
+    fun addMovieAndTags(movie: Movie, tags: List<Tag>): Completable {
+        return addTags(tags)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .andThen(addMovie(movie))
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun addMovie(movie: Movie): Completable {
         return Completable.fromAction {
             movieDao.insertMovie(movie)
         }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun addTags(tags: List<Tag>): Completable {
+        return Completable.fromAction {
+            tagDao.addTags(tags)
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getAllTags(): Flowable<List<Tag>> {
+        return tagDao.getAllTags()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 

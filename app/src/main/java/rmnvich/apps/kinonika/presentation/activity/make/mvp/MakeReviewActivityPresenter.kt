@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_POSTER
 import rmnvich.apps.kinonika.data.entity.Movie
+import rmnvich.apps.kinonika.data.entity.Tag
 import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 import java.io.IOException
 
@@ -19,6 +20,8 @@ class MakeReviewActivityPresenter(
 
     private var mRxPermissions: RxPermissions? = null
     private var movieId: Long = -1L
+
+    private var listOfTags: List<String> = arrayListOf()
 
     override fun attachView(mvpView: MakeReviewActivityContract.View) {
         super.attachView(mvpView)
@@ -36,8 +39,7 @@ class MakeReviewActivityPresenter(
 
     override fun viewIsReady() {
         if (movieId != -1L) {
-            view?.showProgress()
-            val disposable = model.getMovieById(movieId)
+            val movieDisposable = model.getMovieById(movieId)
                     .subscribe({
                         view?.hideProgress()
                         view?.setMovie(it!!)
@@ -45,8 +47,27 @@ class MakeReviewActivityPresenter(
                         view?.hideProgress()
                         view?.showMessage(getString(R.string.error))
                     })
-            compositeDisposable.add(disposable)
+            compositeDisposable.add(movieDisposable)
         } else view?.setMovie(Movie())
+    }
+
+    override fun getTags() {
+        view?.showProgress()
+        val tagsDisposable = model.getTags()
+                .subscribe({
+                    view?.hideProgress()
+                    val list: MutableList<String> = arrayListOf()
+                    for (tag in it) {
+                        list.add(tag.hashTag)
+                    }
+
+                    listOfTags = list
+                    view?.setTagsToAutoCompleteTextView(list)
+                }, {
+                    view?.hideProgress()
+                    view?.showMessage(getString(R.string.error))
+                })
+        compositeDisposable.add(tagsDisposable)
     }
 
     override fun showImageDialog() {
@@ -80,7 +101,7 @@ class MakeReviewActivityPresenter(
     override fun onClickApply(movie: Movie) {
         if (isDataCorrect(movie)) {
             view?.showProgress()
-            val disposable = model.addMovie(movie)
+            val disposable = model.addMovie(movie, listOfTags)
                     .subscribe({
                         view?.hideProgress()
                         (view as Activity).finish()

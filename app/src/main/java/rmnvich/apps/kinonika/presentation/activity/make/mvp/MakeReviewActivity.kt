@@ -21,9 +21,9 @@ import rmnvich.apps.kinonika.data.common.Constants.*
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.ActivityMakeReviewBinding
 import rmnvich.apps.kinonika.presentation.activity.make.dagger.MakeReviewActivityModule
+import rmnvich.apps.kinonika.presentation.custom.SpaceTokenizer
 import java.io.File
 import javax.inject.Inject
-
 
 class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View {
 
@@ -37,16 +37,12 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_make_review
-        )
+        binding = DataBindingUtil.setContentView(this,
+                R.layout.activity_make_review)
         binding.handler = this
 
-        App.getApp(this).componentsHolder.getComponent(
-            javaClass,
-            MakeReviewActivityModule(this)
-        ).inject(this)
+        App.getApp(this).componentsHolder.getComponent(javaClass,
+                MakeReviewActivityModule(this)).inject(this)
     }
 
     @Inject
@@ -60,9 +56,9 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         mPresenter.attachView(this)
         if (intent.extras != null) {
             mPresenter.setMovieId(
-                intent.getLongExtra(
-                    EXTRA_MOVIE_ID, -1L
-                )
+                    intent.getLongExtra(
+                            EXTRA_MOVIE_ID, -1L
+                    )
             )
         }
         mPresenter.viewIsReady()
@@ -70,19 +66,27 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
 
     override fun setMovie(movie: Movie) {
         movie.movieType = intent.extras
-            .getInt(EXTRA_MOVIE_TYPE, -1)
+                .getInt(EXTRA_MOVIE_TYPE, -1)
         setBitmap(movie.poster)
 
         binding.movie = movie
         binding.invalidateAll()
+
+        mPresenter.getTags()
+    }
+
+    override fun setTagsToAutoCompleteTextView(tags: List<String>) {
+        binding.etTag.setAdapter(ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, tags))
+        binding.etTag.setTokenizer(SpaceTokenizer())
     }
 
     override fun setBitmap(filePath: String) {
         binding.movie?.poster = filePath
 
         Glide.with(this)
-            .load(File(filePath))
-            .into(binding.ivPoster)
+                .load(File(filePath))
+                .into(binding.ivPoster)
         binding.invalidateAll()
     }
 
@@ -97,7 +101,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_POSTER && resultCode ==
-            Activity.RESULT_OK && data != null
+                Activity.RESULT_OK && data != null
         ) {
             mPresenter.onActivityResult(data)
         }
@@ -119,7 +123,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         super.onDestroy()
         if (isFinishing) {
             App.getApp(this).componentsHolder
-                .releaseComponent(javaClass)
+                    .releaseComponent(javaClass)
             mPresenter.detachView()
         }
     }
