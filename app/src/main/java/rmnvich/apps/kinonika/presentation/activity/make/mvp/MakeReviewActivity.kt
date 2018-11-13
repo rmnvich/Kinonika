@@ -3,18 +3,12 @@ package rmnvich.apps.kinonika.presentation.activity.make.mvp
 import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants.*
@@ -55,13 +49,11 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
 
         mPresenter.attachView(this)
         if (intent.extras != null) {
-            mPresenter.setMovieId(
-                    intent.getLongExtra(
-                            EXTRA_MOVIE_ID, -1L
-                    )
-            )
+            mPresenter.setMovieId(intent.getLongExtra(
+                    EXTRA_MOVIE_ID, -1L))
         }
         mPresenter.viewIsReady()
+        mPresenter.loadTags()
     }
 
     override fun setMovie(movie: Movie) {
@@ -71,8 +63,6 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
 
         binding.movie = movie
         binding.invalidateAll()
-
-        mPresenter.getTags()
     }
 
     override fun setTagsToAutoCompleteTextView(tags: List<String>) {

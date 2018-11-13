@@ -37,10 +37,16 @@ class DatabaseRepository(appDatabase: AppDatabase) {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getAllTags(): Flowable<List<Tag>> {
+    fun getAllTags(): Flowable<List<String>> {
         return tagDao.getAllTags()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.computation())
+                .flatMap { it ->
+                    Flowable.fromIterable(it)
+                            .map { it.hashTag }
+                            .toList()
+                            .toFlowable()
+                }.observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getMovieById(id: Long): Single<Movie> {

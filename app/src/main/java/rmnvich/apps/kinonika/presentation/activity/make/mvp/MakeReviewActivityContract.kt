@@ -32,7 +32,7 @@ interface MakeReviewActivityContract {
 
     interface Presenter : MvpPresenter<View> {
 
-        fun getTags()
+        fun loadTags()
 
         fun setMovieId(movieId: Long)
 
@@ -55,7 +55,7 @@ interface MakeReviewActivityContract {
 
         fun getRealPath(data: Intent?): String
 
-        fun getTags(): Flowable<List<Tag>>
+        fun getTags(): Flowable<List<String>>
 
         fun getMovieById(movieId: Long): Single<Movie>
 

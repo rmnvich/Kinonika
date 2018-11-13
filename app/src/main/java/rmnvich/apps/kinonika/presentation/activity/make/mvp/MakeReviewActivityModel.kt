@@ -2,7 +2,6 @@ package rmnvich.apps.kinonika.presentation.activity.make.mvp
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -16,9 +15,8 @@ import rmnvich.apps.kinonika.data.repository.local.LocalRepository
 import java.lang.StringBuilder
 import java.util.concurrent.Callable
 
-class MakeReviewActivityModel(
-        private val databaseRepository: DatabaseRepository,
-        private val localRepository: LocalRepository) :
+class MakeReviewActivityModel(private val databaseRepository: DatabaseRepository,
+                              private val localRepository: LocalRepository) :
         MakeReviewActivityContract.Model {
 
     override fun getMovieById(movieId: Long): Single<Movie> {
@@ -26,13 +24,11 @@ class MakeReviewActivityModel(
     }
 
     override fun addMovie(movie: Movie, tags: List<String>): Completable {
-        return Observable.fromCallable(CallableTagsAction(movie, tags))
-                .flatMapCompletable {
-                    databaseRepository.addMovieAndTags(movie, it)
-                }
+        return Observable.fromCallable(CallableCollectTagsAction(movie, tags))
+                .flatMapCompletable { databaseRepository.addMovieAndTags(movie, it) }
     }
 
-    override fun getTags(): Flowable<List<Tag>> {
+    override fun getTags(): Flowable<List<String>> {
         return databaseRepository.getAllTags()
     }
 
@@ -46,21 +42,15 @@ class MakeReviewActivityModel(
         return localRepository.getRealPathFromUri(data?.data)
     }
 
-    inner class CallableBitmapAction(
-            private var uri: Uri,
-            private var realPath: String) :
-            Callable<String> {
-
+    inner class CallableBitmapAction(private var uri: Uri,
+                                     private var realPath: String) : Callable<String> {
         override fun call(): String {
             return localRepository.saveToInternalStorage(uri, realPath)
         }
     }
 
-    inner class CallableTagsAction(
-            private var movie: Movie,
-            private var existTags: List<String>) :
-            Callable<List<Tag>> {
-
+    inner class CallableCollectTagsAction(private var movie: Movie,
+                                          private var existTags: List<String>) : Callable<List<Tag>> {
         override fun call(): List<Tag> {
             val listOfTags = arrayListOf<Tag>()
             val tags = movie.hashTags.split("#")

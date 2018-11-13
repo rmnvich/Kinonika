@@ -9,13 +9,11 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_POSTER
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.data.entity.Tag
 import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 import java.io.IOException
 
-class MakeReviewActivityPresenter(
-        private val compositeDisposable: CompositeDisposable,
-        private val model: MakeReviewActivityModel) :
+class MakeReviewActivityPresenter(private val compositeDisposable: CompositeDisposable,
+                                  private val model: MakeReviewActivityModel) :
         PresenterBase<MakeReviewActivityContract.View>(), MakeReviewActivityContract.Presenter {
 
     private var mRxPermissions: RxPermissions? = null
@@ -51,18 +49,13 @@ class MakeReviewActivityPresenter(
         } else view?.setMovie(Movie())
     }
 
-    override fun getTags() {
+    override fun loadTags() {
         view?.showProgress()
         val tagsDisposable = model.getTags()
                 .subscribe({
                     view?.hideProgress()
-                    val list: MutableList<String> = arrayListOf()
-                    for (tag in it) {
-                        list.add(tag.hashTag)
-                    }
-
-                    listOfTags = list
-                    view?.setTagsToAutoCompleteTextView(list)
+                    view?.setTagsToAutoCompleteTextView(it)
+                    listOfTags = it
                 }, {
                     view?.hideProgress()
                     view?.showMessage(getString(R.string.error))
