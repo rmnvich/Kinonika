@@ -14,6 +14,13 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE movieType = :movieType ORDER BY id DESC")
     fun getAllMovies(movieType: Int): Flowable<List<Movie>>
 
+    @Query("SELECT * FROM movie WHERE hashTags LIKE :tag AND genre LIKE :genre AND year LIKE :year AND rating LIKE :rating AND movieType = :movieType ORDER BY id DESC")
+    fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
+                             year: String, rating: Int): Flowable<List<Movie>>
+
+    @Query("SELECT * FROM movie WHERE hashTags LIKE :tag AND genre LIKE :genre AND year LIKE :year AND movieType = :movieType ORDER BY id DESC")
+    fun getAllFilteredMovies(movieType: Int, genre: String, tag: String, year: String): Flowable<List<Movie>>
+
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getMovieById(id: Long): Single<Movie>
 

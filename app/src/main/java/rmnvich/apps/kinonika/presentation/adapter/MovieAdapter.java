@@ -31,9 +31,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private int position = -1;
 
     public void setData(List<Movie> data) {
+        boolean isSimilarLists = mMovieFilteredList.size() != 0;
+        for (int i = 0; i < mMovieFilteredList.size(); i++) {
+            if (mMovieFilteredList.get(i).getId() != data.get(i).getId()) {
+                isSimilarLists = false;
+                break;
+            }
+        }
         mMovieList = data;
         mMovieFilteredList = data;
-        updateWithAnimations();
+        updateWithAnimations(isSimilarLists);
     }
 
     public void setActionType(int actionType) {
@@ -44,18 +51,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.position = position;
     }
 
-    private void updateWithAnimations() {
-        if (actionType == -1 && position == -1) {
+    private void updateWithAnimations(boolean isSimilarLists) {
+        try {
+            if (actionType == -1 && position == -1) {
+                notifyDataSetChanged();
+            } else if (actionType == ACTION_TYPE_INSERT) {
+                if (!isSimilarLists)
+                    notifyItemInserted(position);
+            } else if (actionType == ACTION_TYPE_DELETE) {
+                notifyItemRemoved(position);
+            } else if (actionType == ACTION_TYPE_UPDATE) {
+                notifyItemChanged(position);
+            }
+            actionType = -1;
+            position = -1;
+        } catch (IndexOutOfBoundsException e) {
             notifyDataSetChanged();
-        } else if (actionType == ACTION_TYPE_INSERT) {
-            notifyItemInserted(position);
-        } else if (actionType == ACTION_TYPE_DELETE) {
-            notifyItemRemoved(position);
-        } else if (actionType == ACTION_TYPE_UPDATE) {
-            notifyItemChanged(position);
         }
-        actionType = -1;
-        position = -1;
     }
 
 

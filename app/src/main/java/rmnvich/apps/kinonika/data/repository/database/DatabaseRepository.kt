@@ -1,5 +1,6 @@
 package rmnvich.apps.kinonika.data.repository.database
 
+import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -57,6 +58,21 @@ class DatabaseRepository(appDatabase: AppDatabase) {
 
     fun getAllMovies(movieType: Int): Flowable<List<Movie>> {
         return movieDao.getAllMovies(movieType)
+                .subscribeOn(Schedulers.io())
+                .delay(450, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
+                             year: String, rating: Int): Flowable<List<Movie>> {
+        return if (rating == 0) {
+            movieDao.getAllFilteredMovies(movieType, "%$genre%", "%$tag%",
+                    "%$year%")
+                    .subscribeOn(Schedulers.io())
+                    .delay(450, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+        } else movieDao.getAllFilteredMovies(movieType, "%$genre%", "%$tag%",
+                "%$year%", rating)
                 .subscribeOn(Schedulers.io())
                 .delay(450, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

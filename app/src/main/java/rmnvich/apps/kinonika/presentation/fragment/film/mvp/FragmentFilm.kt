@@ -3,7 +3,6 @@ package rmnvich.apps.kinonika.presentation.fragment.film.mvp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -14,12 +13,17 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants
+import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_FILM
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
+import rmnvich.apps.kinonika.presentation.custom.WrapContentLinearLayoutManager
+import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
+import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmModule
 import javax.inject.Inject
+import javax.inject.Provider
 
 
 class FragmentFilm : Fragment(), FragmentFilmContract.View {
@@ -31,6 +35,9 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
 
     @Inject
     lateinit var mAdapter: MovieAdapter
+
+    @Inject
+    lateinit var mFilterDialog: Provider<DialogFilter>
 
     companion object {
         fun newInstance(): FragmentFilm {
@@ -49,13 +56,13 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
                 if (binding.searchView.isSearchOpen) {
                     binding.searchView.closeSearch()
                     return
-                }
+                } else activity?.finish()
                 super.doBack()
             }
         })
         setHasOptionsMenu(true)
 
-        binding.recyclerFilms.layoutManager = LinearLayoutManager(context,
+        binding.recyclerFilms.layoutManager = WrapContentLinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
         binding.recyclerFilms.adapter = mAdapter
         mAdapter.setOnClickMovieListener(object : MovieAdapter.OnClickMovieListener {
@@ -79,10 +86,11 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
         super.onCreateOptionsMenu(menu, inflater)
         menu?.clear()
         inflater?.inflate(R.menu.search_menu, menu)
-        val item = menu?.findItem(R.id.action_search)
+        val searchItem = menu?.findItem(R.id.action_search)
+        val filterItem = menu?.findItem(R.id.action_filter)
 
         binding.searchView.clearFocus()
-        binding.searchView.setMenuItem(item)
+        binding.searchView.setMenuItem(searchItem)
         binding.searchView.setBackgroundColor(resources.getColor(R.color.itemColorBackground, null))
         binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted, null))
         binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted, null))
@@ -97,19 +105,25 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
                 return false
             }
         })
+
+        filterItem?.setOnMenuItemClickListener {
+            mPresenter.onClickFilter()
+            true
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPresenter.attachView(this)
-        mPresenter.setMovieType(Constants.REQUEST_CODE_FILM)
+        mPresenter.setMovieType(REQUEST_CODE_FILM)
         mPresenter.viewIsReady()
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass).inject(this)
+                .getComponent(javaClass, FragmentFilmModule(context!!))
+                .inject(this)
     }
 
     override fun updateAdapter(movies: List<Movie>) {
@@ -119,6 +133,12 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
     override fun setAnimationTypeToAdapter(position: Int, animationType: Int) {
         mAdapter.setActionType(animationType)
         mAdapter.setPosition(position)
+    }
+
+    override fun showFilterDialog(tags: List<String>) {
+        mFilterDialog.get().show({ genre, tag, rating, year ->
+            mPresenter.onFilterApply(genre, tag, rating, year)
+        }, tags)
     }
 
     override fun showMessage(text: String) {

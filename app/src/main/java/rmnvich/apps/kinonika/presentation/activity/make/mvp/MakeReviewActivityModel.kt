@@ -52,24 +52,27 @@ class MakeReviewActivityModel(private val databaseRepository: DatabaseRepository
     inner class CallableCollectTagsAction(private var movie: Movie,
                                           private var existTags: List<String>) : Callable<List<Tag>> {
         override fun call(): List<Tag> {
-            val listOfTags = arrayListOf<Tag>()
+            val listOfNewTags = arrayListOf<Tag>()
+            val listOfAllTags = arrayListOf<Tag>()
             val tags = movie.hashTags.split("#")
 
             for (tag in tags) {
                 val tagName = ("#$tag").trim()
 
+                listOfAllTags.add(Tag(tagName))
                 if (!existTags.contains(tagName))
-                    listOfTags.add(Tag(tagName))
+                    listOfNewTags.add(Tag(tagName))
             }
-            listOfTags.removeAt(0)
+            listOfAllTags.removeAt(0)
+            listOfNewTags.removeAt(0)
 
             val stringBuilder = StringBuilder()
-            for (tag in listOfTags) {
+            for (tag in listOfAllTags) {
                 stringBuilder.append(tag.hashTag + " ")
             }
-            movie.hashTags = stringBuilder.toString().trim()
 
-            return listOfTags
+            movie.hashTags = stringBuilder.toString().trim()
+            return listOfNewTags
         }
     }
 }

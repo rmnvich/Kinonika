@@ -14,12 +14,18 @@ interface FragmentFilmContract {
 
         fun setAnimationTypeToAdapter(position: Int, animationType: Int)
 
+        fun showFilterDialog(tags: List<String>)
+
         fun showMessage(text: String)
     }
 
     interface Presenter : MvpPresenter<View> {
 
         fun onFabClicked()
+
+        fun onClickFilter()
+
+        fun onFilterApply(genre: String, tag: String, rating: Int, year: String)
 
         fun onClickMovie(movieId: Long)
 
@@ -30,6 +36,11 @@ interface FragmentFilmContract {
 
     interface Model : MvpModel {
 
+        fun getTags(): Flowable<List<String>>
+
         fun getAllFilms(movieType: Int): Flowable<List<Movie>>
+
+        fun getAllFilteredFilms(movieType: Int, genre: String, tag: String,
+                                rating: Int, year: String): Flowable<List<Movie>>
     }
 }

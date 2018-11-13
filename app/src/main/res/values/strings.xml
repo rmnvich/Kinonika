@@ -21,8 +21,13 @@
     <string name="empty_field_error">Please fill in all fields</string>
     <string name="delete_image">Delete image</string>
     <string name="search">Search…</string>
+    <string name="rating">Rating:</string>
+    <string name="filter">Filter</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="genres">
+        <item />
         <item>Erotic</item>
         <item>Fantasy</item>
         <item>Film noir</item>
@@ -53,5 +58,14 @@
         <item>Western</item>
         <item>Action movie</item>
         <item>Biographical</item>
+    </string-array>
+
+    <string-array name="rating">
+        <item />
+        <item>One star</item>
+        <item>Two stars</item>
+        <item>Three stars</item>
+        <item>Four stars</item>
+        <item>Five stars</item>
     </string-array>
 </resources>
