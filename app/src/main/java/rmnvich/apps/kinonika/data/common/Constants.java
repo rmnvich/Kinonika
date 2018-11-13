@@ -16,6 +16,6 @@ public class Constants {
     public static int REQUEST_CODE_POSTER = 4;
 
     /*
-     * TODO: Filter by genre, year, county, rating
+     * TODO: One fragment
      */
 }

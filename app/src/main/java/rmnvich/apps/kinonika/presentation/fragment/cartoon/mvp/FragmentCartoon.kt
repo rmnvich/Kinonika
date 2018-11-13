@@ -2,30 +2,29 @@ package rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import butterknife.OnClick
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
-import rmnvich.apps.kinonika.data.common.Constants
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_CARTOON
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentCartoonBinding
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
-import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
+import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
+import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonModule
+import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
 import javax.inject.Inject
+import javax.inject.Provider
 
-class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
+class FragmentCartoon : Fragment(), FragmentMovieContract.View {
 
     private lateinit var binding: FragmentCartoonBinding
 
@@ -34,6 +33,9 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
 
     @Inject
     lateinit var mAdapter: MovieAdapter
+
+    @Inject
+    lateinit var mFilterDialog: Provider<DialogFilter>
 
     companion object {
         fun newInstance(): FragmentCartoon {
@@ -52,7 +54,7 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
                 if (binding.searchView.isSearchOpen) {
                     binding.searchView.closeSearch()
                     return
-                }
+                } else activity?.finish()
                 super.doBack()
             }
         })
@@ -77,19 +79,15 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
         return binding.root
     }
 
-    @SuppressLint("NewApi")
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        menu?.clear()
         inflater?.inflate(R.menu.search_menu, menu)
-        val item = menu?.findItem(R.id.action_search)
+        val searchItem = menu?.findItem(R.id.action_search)
+        val filterItem = menu?.findItem(R.id.action_filter)
 
-        binding.searchView.clearFocus()
-        binding.searchView.setMenuItem(item)
-        binding.searchView.setBackgroundColor(resources.getColor(R.color.itemColorBackground, null))
-        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted, null))
-        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted, null))
-        binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+        binding.searchView.setMenuItem(searchItem)
+        binding.searchView.setOnQueryTextListener(object :
+                MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mAdapter.filter.filter(query)
                 return false
@@ -100,6 +98,11 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
                 return false
             }
         })
+
+        filterItem?.setOnMenuItemClickListener {
+            mPresenter.onClickFilter()
+            true
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,7 +115,8 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass).inject(this)
+                .getComponent(javaClass, FragmentCartoonModule(context!!))
+                .inject(this)
     }
 
     override fun updateAdapter(movies: List<Movie>) {
@@ -122,6 +126,12 @@ class FragmentCartoon : Fragment(), FragmentCartoonContract.View {
     override fun setAnimationTypeToAdapter(position: Int, animationType: Int) {
         mAdapter.setActionType(animationType)
         mAdapter.setPosition(position)
+    }
+
+    override fun showFilterDialog(tags: List<String>) {
+        mFilterDialog.get().show({ genre, tag, rating, year ->
+            mPresenter.onFilterApply(genre, tag, rating, year)
+        }, tags)
     }
 
     override fun showMessage(text: String) {

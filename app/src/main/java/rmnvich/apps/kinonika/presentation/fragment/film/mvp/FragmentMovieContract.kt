@@ -6,7 +6,7 @@ import rmnvich.apps.kinonika.presentation.mvp.MvpModel
 import rmnvich.apps.kinonika.presentation.mvp.MvpPresenter
 import rmnvich.apps.kinonika.presentation.mvp.MvpView
 
-interface FragmentFilmContract {
+interface FragmentMovieContract {
 
     interface View : MvpView {
 
@@ -38,9 +38,9 @@ interface FragmentFilmContract {
 
         fun getTags(): Flowable<List<String>>
 
-        fun getAllFilms(movieType: Int): Flowable<List<Movie>>
+        fun getAllMovies(movieType: Int): Flowable<List<Movie>>
 
-        fun getAllFilteredFilms(movieType: Int, genre: String, tag: String,
-                                rating: Int, year: String): Flowable<List<Movie>>
+        fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
+                                 rating: Int, year: String): Flowable<List<Movie>>
     }
 }

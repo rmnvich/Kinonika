@@ -2,6 +2,7 @@ package rmnvich.apps.kinonika.presentation.fragment.film.mvp
 
 import android.content.Intent
 import android.support.v4.app.Fragment
+import android.util.Log
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import rmnvich.apps.kinonika.R
@@ -13,7 +14,7 @@ import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 class FragmentFilmPresenter(
         private val compositeDisposable: CompositeDisposable,
         private val model: FragmentFilmModel) :
-        PresenterBase<FragmentFilmContract.View>(), FragmentFilmContract.Presenter {
+        PresenterBase<FragmentMovieContract.View>(), FragmentMovieContract.Presenter {
 
     private var movieType: Int = -1
 
@@ -26,7 +27,7 @@ class FragmentFilmPresenter(
 
     override fun viewIsReady() {
         view?.showProgress()
-        allMoviesDisposable = model.getAllFilms(movieType)
+        allMoviesDisposable = model.getAllMovies(movieType)
                 .subscribe({
                     view?.hideProgress()
                     view?.updateAdapter(it)
@@ -53,13 +54,13 @@ class FragmentFilmPresenter(
         allMoviesDisposable?.dispose()
 
         view?.showProgress()
-        filteredMoviesDisposable = model.getAllFilteredFilms(movieType, genre, tag, rating, year)
+        filteredMoviesDisposable = model.getAllFilteredMovies(movieType, genre, tag, rating, year)
                 .subscribe({
                     view?.hideProgress()
                     view?.updateAdapter(it)
                 }, {
                     view?.hideProgress()
-                    view?.showMessage(getString(R.string.error))
+                    view?.showMessage(it.message!!)
                 }, { view?.hideProgress() })
     }
 

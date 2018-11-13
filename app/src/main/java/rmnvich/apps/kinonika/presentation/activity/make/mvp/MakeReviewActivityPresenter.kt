@@ -107,12 +107,13 @@ class MakeReviewActivityPresenter(private val compositeDisposable: CompositeDisp
     }
 
     override fun isDataCorrect(movie: Movie): Boolean {
-        return !(movie.name.isEmpty() ||
-                movie.country.isEmpty() ||
-                movie.year.isEmpty() ||
-                movie.genre.isEmpty() ||
-                movie.ratingIMDb.isEmpty() ||
-                movie.plot.isEmpty())
+//        return !(movie.name.isEmpty() ||
+//                movie.country.isEmpty() ||
+//                movie.year.isEmpty() ||
+//                movie.genre.isEmpty() ||
+//                movie.ratingIMDb.isEmpty() ||
+//                movie.plot.isEmpty())
+        return true
     }
 
     override fun requestPermissions() {

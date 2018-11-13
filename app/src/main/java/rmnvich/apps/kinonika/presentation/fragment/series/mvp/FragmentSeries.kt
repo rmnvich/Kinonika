@@ -3,7 +3,6 @@ package rmnvich.apps.kinonika.presentation.fragment.series.mvp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -19,9 +18,14 @@ import rmnvich.apps.kinonika.databinding.FragmentSeriesBinding
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
+import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
+import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesModule
+import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesModule_ProvideAdapterFactory
 import javax.inject.Inject
+import javax.inject.Provider
 
-class FragmentSeries : Fragment(), FragmentSeriesContract.View {
+class FragmentSeries : Fragment(), FragmentMovieContract.View {
 
     private lateinit var binding: FragmentSeriesBinding
 
@@ -30,6 +34,9 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
 
     @Inject
     lateinit var mAdapter: MovieAdapter
+
+    @Inject
+    lateinit var mFilterDialog: Provider<DialogFilter>
 
     companion object {
         fun newInstance(): FragmentSeries {
@@ -48,7 +55,7 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
                 if (binding.searchView.isSearchOpen) {
                     binding.searchView.closeSearch()
                     return
-                }
+                } else activity?.finish()
                 super.doBack()
             }
         })
@@ -73,18 +80,13 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
         return binding.root
     }
 
-    @SuppressLint("NewApi")
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        menu?.clear()
         inflater?.inflate(R.menu.search_menu, menu)
-        val item = menu?.findItem(R.id.action_search)
+        val searchItem = menu?.findItem(R.id.action_search)
+        val filterItem = menu?.findItem(R.id.action_filter)
 
-        binding.searchView.clearFocus()
-        binding.searchView.setMenuItem(item)
-        binding.searchView.setBackgroundColor(resources.getColor(R.color.itemColorBackground, null))
-        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted, null))
-        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted, null))
+        binding.searchView.setMenuItem(searchItem)
         binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mAdapter.filter.filter(query)
@@ -96,6 +98,11 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
                 return false
             }
         })
+
+        filterItem?.setOnMenuItemClickListener {
+            mPresenter.onClickFilter()
+            true
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,7 +115,8 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass).inject(this)
+                .getComponent(javaClass, FragmentSeriesModule(context!!))
+                .inject(this)
     }
 
     override fun updateAdapter(movies: List<Movie>) {
@@ -118,6 +126,12 @@ class FragmentSeries : Fragment(), FragmentSeriesContract.View {
     override fun setAnimationTypeToAdapter(position: Int, animationType: Int) {
         mAdapter.setActionType(animationType)
         mAdapter.setPosition(position)
+    }
+
+    override fun showFilterDialog(tags: List<String>) {
+        mFilterDialog.get().show({ genre, tag, rating, year ->
+            mPresenter.onFilterApply(genre, tag, rating, year)
+        }, tags)
     }
 
     override fun showMessage(text: String) {

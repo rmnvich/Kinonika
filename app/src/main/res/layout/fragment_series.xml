@@ -42,7 +42,10 @@
                     android:hint="@string/search"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/colorAccentWhite"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    app:searchBackIcon="@drawable/ic_action_back_inverted"
+                    app:searchBackground="@color/itemColorBackground"
+                    app:searchCloseIcon="@drawable/ic_action_close_inverted" />
             </FrameLayout>
         </android.support.design.widget.AppBarLayout>
 

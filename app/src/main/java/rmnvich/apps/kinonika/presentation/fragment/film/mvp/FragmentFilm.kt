@@ -12,7 +12,6 @@ import android.view.*
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
-import rmnvich.apps.kinonika.data.common.Constants
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_FILM
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
@@ -26,7 +25,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class FragmentFilm : Fragment(), FragmentFilmContract.View {
+class FragmentFilm : Fragment(), FragmentMovieContract.View {
 
     private lateinit var binding: FragmentFilmBinding
 
@@ -81,19 +80,13 @@ class FragmentFilm : Fragment(), FragmentFilmContract.View {
         return binding.root
     }
 
-    @SuppressLint("NewApi")
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        menu?.clear()
         inflater?.inflate(R.menu.search_menu, menu)
         val searchItem = menu?.findItem(R.id.action_search)
         val filterItem = menu?.findItem(R.id.action_filter)
 
-        binding.searchView.clearFocus()
         binding.searchView.setMenuItem(searchItem)
-        binding.searchView.setBackgroundColor(resources.getColor(R.color.itemColorBackground, null))
-        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted, null))
-        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted, null))
         binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mAdapter.filter.filter(query)

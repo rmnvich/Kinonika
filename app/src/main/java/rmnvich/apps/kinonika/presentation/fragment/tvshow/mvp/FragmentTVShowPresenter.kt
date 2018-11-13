@@ -3,18 +3,23 @@ package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
 import android.content.Intent
 import android.support.v4.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity
+import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
 import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
 
 class FragmentTVShowPresenter(
         private val compositeDisposable: CompositeDisposable,
         private val model: FragmentTVShowModel) :
-        PresenterBase<FragmentTVShowContract.View>(), FragmentTVShowContract.Presenter {
+        PresenterBase<FragmentMovieContract.View>(), FragmentMovieContract.Presenter {
 
     private var movieType: Int = -1
+
+    private var allMoviesDisposable: Disposable? = null
+    private var filteredMoviesDisposable: Disposable? = null
 
     override fun setMovieType(movieType: Int) {
         this.movieType = movieType
@@ -22,7 +27,7 @@ class FragmentTVShowPresenter(
 
     override fun viewIsReady() {
         view?.showProgress()
-        val disposable = model.getAllTVShow(movieType)
+        allMoviesDisposable = model.getAllMovies(movieType)
                 .subscribe({
                     view?.hideProgress()
                     view?.updateAdapter(it)
@@ -30,7 +35,33 @@ class FragmentTVShowPresenter(
                     view?.hideProgress()
                     view?.showMessage(getString(R.string.error))
                 }, { view?.hideProgress() })
+    }
+
+    override fun onClickFilter() {
+        view?.showProgress()
+        val disposable = model.getTags()
+                .subscribe({
+                    view?.hideProgress()
+                    view?.showFilterDialog(it)
+                }, {
+                    view?.hideProgress()
+                    view?.showMessage(getString(R.string.error))
+                })
         compositeDisposable.add(disposable)
+    }
+
+    override fun onFilterApply(genre: String, tag: String, rating: Int, year: String) {
+        allMoviesDisposable?.dispose()
+
+        view?.showProgress()
+        filteredMoviesDisposable = model.getAllFilteredMovies(movieType, genre, tag, rating, year)
+                .subscribe({
+                    view?.hideProgress()
+                    view?.updateAdapter(it)
+                }, {
+                    view?.hideProgress()
+                    view?.showMessage(getString(R.string.error))
+                }, { view?.hideProgress() })
     }
 
     override fun onClickMovie(movieId: Long) {
