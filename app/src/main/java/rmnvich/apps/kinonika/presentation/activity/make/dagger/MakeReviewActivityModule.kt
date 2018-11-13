@@ -1,9 +1,11 @@
 package rmnvich.apps.kinonika.presentation.activity.make.dagger
 
 import android.content.Context
+import android.widget.ArrayAdapter
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.di.base.BaseModule
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
 import rmnvich.apps.kinonika.data.repository.local.LocalRepository
@@ -37,5 +39,12 @@ class MakeReviewActivityModule(val context: Context) : BaseModule {
     @PerMakeReviewActivity
     fun provideLocalRepository() : LocalRepository {
         return LocalRepository(context)
+    }
+
+    @Provides
+    @PerMakeReviewActivity
+    fun provideGenreAdapter() : ArrayAdapter<String> {
+        return ArrayAdapter(context, android.R.layout.simple_list_item_1,
+            context.resources.getStringArray(R.array.genres))
     }
 }

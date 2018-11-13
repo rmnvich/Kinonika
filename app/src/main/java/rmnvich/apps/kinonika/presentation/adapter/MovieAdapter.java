@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -70,6 +71,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(mMovieFilteredList.get(position));
+        setFadeAnimation(holder.itemView);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(450);
+        view.startAnimation(anim);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -74,6 +75,7 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
         return binding.root
     }
 
+    @SuppressLint("NewApi")
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         menu?.clear()
@@ -82,9 +84,9 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
 
         binding.searchView.clearFocus()
         binding.searchView.setMenuItem(item)
-        binding.searchView.setBackgroundColor(Color.BLACK)
-        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted))
-        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted))
+        binding.searchView.setBackgroundColor(resources.getColor(R.color.itemColorBackground, null))
+        binding.searchView.setBackIcon(resources.getDrawable(R.drawable.ic_action_back_inverted, null))
+        binding.searchView.setCloseIcon(resources.getDrawable(R.drawable.ic_action_close_inverted, null))
         binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mAdapter.filter.filter(query)
@@ -125,11 +127,11 @@ class FragmentTVShow : Fragment(), FragmentTVShowContract.View {
     }
 
     override fun showProgress() {
-        binding.progressBar.show()
+        binding.progressBar.smoothToShow()
     }
 
     override fun hideProgress() {
-        binding.progressBar.hide()
+        binding.progressBar.smoothToHide()
     }
 
     override fun onPause() {

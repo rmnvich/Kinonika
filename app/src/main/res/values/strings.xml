@@ -21,4 +21,37 @@
     <string name="empty_field_error">Please fill in all fields</string>
     <string name="delete_image">Delete image</string>
     <string name="search">Search…</string>
+
+    <string-array name="genres">
+        <item>Erotic</item>
+        <item>Fantasy</item>
+        <item>Film noir</item>
+        <item>Horrors</item>
+        <item>Thriller</item>
+        <item>Talk show</item>
+        <item>Sport</item>
+        <item>Family</item>
+        <item>Reality show</item>
+        <item>Adventure</item>
+        <item>Scientific</item>
+        <item>Musical</item>
+        <item>Cartoon</item>
+        <item>Music</item>
+        <item>Mystic</item>
+        <item>Melodrama</item>
+        <item>Crime</item>
+        <item>Short</item>
+        <item>Concert</item>
+        <item>Comedy</item>
+        <item>Kinokomiks</item>
+        <item>Historical</item>
+        <item>Drama</item>
+        <item>Documentary</item>
+        <item>Children</item>
+        <item>Detective</item>
+        <item>Military</item>
+        <item>Western</item>
+        <item>Action movie</item>
+        <item>Biographical</item>
+    </string-array>
 </resources>

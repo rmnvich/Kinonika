@@ -11,6 +11,8 @@ import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.MultiAutoCompleteTextView
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import rmnvich.apps.kinonika.R
@@ -30,14 +32,21 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     @Inject
     lateinit var mPresenter: MakeReviewActivityPresenter
 
+    @Inject
+    lateinit var mGenreAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-                R.layout.activity_make_review)
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_make_review
+        )
         binding.handler = this
 
-        App.getApp(this).componentsHolder.getComponent(javaClass,
-                MakeReviewActivityModule(this)).inject(this)
+        App.getApp(this).componentsHolder.getComponent(
+            javaClass,
+            MakeReviewActivityModule(this)
+        ).inject(this)
     }
 
     @Inject
@@ -45,17 +54,23 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
+        binding.etGenre.setAdapter(mGenreAdapter)
+        binding.etGenre.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+
         mPresenter.attachView(this)
         if (intent.extras != null) {
-            mPresenter.setMovieId(intent.getLongExtra(
-                    EXTRA_MOVIE_ID, -1L))
+            mPresenter.setMovieId(
+                intent.getLongExtra(
+                    EXTRA_MOVIE_ID, -1L
+                )
+            )
         }
         mPresenter.viewIsReady()
     }
 
     override fun setMovie(movie: Movie) {
         movie.movieType = intent.extras
-                .getInt(EXTRA_MOVIE_TYPE, -1)
+            .getInt(EXTRA_MOVIE_TYPE, -1)
         setBitmap(movie.poster)
 
         binding.movie = movie
@@ -66,8 +81,8 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
         binding.movie?.poster = filePath
 
         Glide.with(this)
-                .load(File(filePath))
-                .into(binding.ivPoster)
+            .load(File(filePath))
+            .into(binding.ivPoster)
         binding.invalidateAll()
     }
 
@@ -82,7 +97,7 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_POSTER && resultCode ==
-                Activity.RESULT_OK && data != null
+            Activity.RESULT_OK && data != null
         ) {
             mPresenter.onActivityResult(data)
         }
@@ -93,18 +108,18 @@ class MakeReviewActivity : AppCompatActivity(), MakeReviewActivityContract.View 
     }
 
     override fun showProgress() {
-        binding.progressBar.show()
+        binding.progressBar.smoothToShow()
     }
 
     override fun hideProgress() {
-        binding.progressBar.hide()
+        binding.progressBar.smoothToHide()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (isFinishing) {
             App.getApp(this).componentsHolder
-                    .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
             mPresenter.detachView()
         }
     }

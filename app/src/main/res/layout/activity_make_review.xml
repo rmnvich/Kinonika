@@ -94,7 +94,7 @@
                                     android:layout_width="@dimen/delete_image_size"
                                     android:layout_height="@dimen/delete_image_size"
                                     android:layout_gravity="top|end"
-                                    android:background="@color/colorWhiteAlpha2"
+                                    android:background="@drawable/corner_rectangle"
                                     android:contentDescription="@string/delete_image"
                                     android:foreground="?attr/selectableItemBackground"
                                     android:onClick='@{(view) -> handler.setBitmap("")}'
