@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_POSTER
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
+import rmnvich.apps.kinonika.presentation.mvp.base.PresenterBase
 import java.io.IOException
 
 class MakeReviewActivityPresenter(private val compositeDisposable: CompositeDisposable,

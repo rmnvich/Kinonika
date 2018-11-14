@@ -13,8 +13,8 @@ import rmnvich.apps.kinonika.data.di.qualifier.AdapterYear
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoonModel
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoonPresenter
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieModel
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
 import java.util.*
 
 @Module
@@ -22,9 +22,9 @@ class FragmentCartoonModule(private val context: Context) : BaseModule {
 
     @PerFragmentCartoon
     @Provides
-    fun providePresenter(compositeDisposable: CompositeDisposable, model: FragmentCartoonModel)
-            : FragmentCartoonPresenter {
-        return FragmentCartoonPresenter(compositeDisposable, model)
+    fun providePresenter(compositeDisposable: CompositeDisposable, model: FragmentMovieModel)
+            : FragmentMoviePresenter {
+        return FragmentMoviePresenter(compositeDisposable, model)
     }
 
     @PerFragmentCartoon
@@ -35,8 +35,8 @@ class FragmentCartoonModule(private val context: Context) : BaseModule {
 
     @PerFragmentCartoon
     @Provides
-    fun provideModel(databaseRepository: DatabaseRepository): FragmentCartoonModel {
-        return FragmentCartoonModel(databaseRepository)
+    fun provideModel(databaseRepository: DatabaseRepository): FragmentMovieModel {
+        return FragmentMovieModel(databaseRepository)
     }
 
     @PerFragmentCartoon

@@ -1,4 +1,4 @@
-package rmnvich.apps.kinonika.presentation.mvp
+package rmnvich.apps.kinonika.presentation.mvp.base
 
 interface MvpPresenter<V : MvpView> {
 

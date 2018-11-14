@@ -1,6 +1,5 @@
-package rmnvich.apps.kinonika.presentation.fragment.series.mvp
+package rmnvich.apps.kinonika.presentation.fragment.series
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,16 +11,16 @@ import android.view.*
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
-import rmnvich.apps.kinonika.data.common.Constants.*
+import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_SERIES
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.FragmentSeriesBinding
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
 import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesModule
-import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesModule_ProvideAdapterFactory
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -30,7 +29,7 @@ class FragmentSeries : Fragment(), FragmentMovieContract.View {
     private lateinit var binding: FragmentSeriesBinding
 
     @Inject
-    lateinit var mPresenter: FragmentSeriesPresenter
+    lateinit var mPresenter: FragmentMoviePresenter
 
     @Inject
     lateinit var mAdapter: MovieAdapter

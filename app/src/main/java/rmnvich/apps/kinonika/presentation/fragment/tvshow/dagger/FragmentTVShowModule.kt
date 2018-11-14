@@ -13,9 +13,8 @@ import rmnvich.apps.kinonika.data.di.qualifier.AdapterYear
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.PerFragmentCartoon
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShowModel
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShowPresenter
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieModel
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
 import java.util.*
 
 @Module
@@ -23,9 +22,9 @@ class FragmentTVShowModule(private val context: Context) : BaseModule {
 
     @PerFragmentTVShow
     @Provides
-    fun providePresenter(compositeDisposable: CompositeDisposable, model: FragmentTVShowModel)
-            : FragmentTVShowPresenter {
-        return FragmentTVShowPresenter(compositeDisposable, model)
+    fun providePresenter(compositeDisposable: CompositeDisposable, model: FragmentMovieModel)
+            : FragmentMoviePresenter {
+        return FragmentMoviePresenter(compositeDisposable, model)
     }
 
     @PerFragmentTVShow
@@ -36,8 +35,8 @@ class FragmentTVShowModule(private val context: Context) : BaseModule {
 
     @PerFragmentTVShow
     @Provides
-    fun provideModel(databaseRepository: DatabaseRepository): FragmentTVShowModel {
-        return FragmentTVShowModel(databaseRepository)
+    fun provideModel(databaseRepository: DatabaseRepository): FragmentMovieModel {
+        return FragmentMovieModel(databaseRepository)
     }
 
     @PerFragmentTVShow

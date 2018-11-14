@@ -1,17 +1,14 @@
 package rmnvich.apps.kinonika.presentation.activity.make.mvp
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.data.entity.Tag
-import rmnvich.apps.kinonika.presentation.mvp.MvpModel
-import rmnvich.apps.kinonika.presentation.mvp.MvpPresenter
-import rmnvich.apps.kinonika.presentation.mvp.MvpView
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpModel
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpPresenter
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpView
 
 interface MakeReviewActivityContract {
 

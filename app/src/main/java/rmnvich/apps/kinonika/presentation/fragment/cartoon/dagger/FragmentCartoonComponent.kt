@@ -3,7 +3,7 @@ package rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger
 import dagger.Subcomponent
 import rmnvich.apps.kinonika.data.di.base.BaseComponent
 import rmnvich.apps.kinonika.data.di.base.BaseComponentBuilder
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoon
+import rmnvich.apps.kinonika.presentation.fragment.cartoon.FragmentCartoon
 
 @PerFragmentCartoon
 @Subcomponent(modules = [FragmentCartoonModule::class])

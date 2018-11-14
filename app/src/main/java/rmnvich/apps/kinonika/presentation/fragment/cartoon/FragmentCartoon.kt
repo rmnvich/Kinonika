@@ -1,6 +1,5 @@
-package rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp
+package rmnvich.apps.kinonika.presentation.fragment.cartoon
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -20,7 +19,8 @@ import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonModule
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -29,7 +29,7 @@ class FragmentCartoon : Fragment(), FragmentMovieContract.View {
     private lateinit var binding: FragmentCartoonBinding
 
     @Inject
-    lateinit var mPresenter: FragmentCartoonPresenter
+    lateinit var mPresenter: FragmentMoviePresenter
 
     @Inject
     lateinit var mAdapter: MovieAdapter

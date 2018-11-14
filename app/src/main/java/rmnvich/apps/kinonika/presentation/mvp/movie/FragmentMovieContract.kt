@@ -1,10 +1,10 @@
-package rmnvich.apps.kinonika.presentation.fragment.film.mvp
+package rmnvich.apps.kinonika.presentation.mvp.movie
 
 import io.reactivex.Flowable
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.presentation.mvp.MvpModel
-import rmnvich.apps.kinonika.presentation.mvp.MvpPresenter
-import rmnvich.apps.kinonika.presentation.mvp.MvpView
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpModel
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpPresenter
+import rmnvich.apps.kinonika.presentation.mvp.base.MvpView
 
 interface FragmentMovieContract {
 

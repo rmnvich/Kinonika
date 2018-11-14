@@ -1,6 +1,5 @@
-package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
+package rmnvich.apps.kinonika.presentation.fragment.film
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,24 +11,27 @@ import android.view.*
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
-import rmnvich.apps.kinonika.data.common.Constants.*
+import rmnvich.apps.kinonika.data.common.Constants.REQUEST_CODE_FILM
 import rmnvich.apps.kinonika.data.entity.Movie
-import rmnvich.apps.kinonika.databinding.FragmentTvshowBinding
+import rmnvich.apps.kinonika.databinding.FragmentFilmBinding
 import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity
 import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
+import rmnvich.apps.kinonika.presentation.custom.WrapContentLinearLayoutManager
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.dagger.FragmentTVShowModule
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieContract
+import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
+import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmModule
 import javax.inject.Inject
 import javax.inject.Provider
 
-class FragmentTVShow : Fragment(), FragmentMovieContract.View {
 
-    private lateinit var binding: FragmentTvshowBinding
+class FragmentFilm : Fragment(), FragmentMovieContract.View {
+
+    private lateinit var binding: FragmentFilmBinding
 
     @Inject
-    lateinit var mPresenter: FragmentTVShowPresenter
+    lateinit var mPresenter: FragmentMoviePresenter
 
     @Inject
     lateinit var mAdapter: MovieAdapter
@@ -38,13 +40,13 @@ class FragmentTVShow : Fragment(), FragmentMovieContract.View {
     lateinit var mFilterDialog: Provider<DialogFilter>
 
     companion object {
-        fun newInstance(): FragmentTVShow {
-            return FragmentTVShow()
+        fun newInstance(): FragmentFilm {
+            return FragmentFilm()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tvshow, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_film, container, false)
         binding.handler = this
 
         (activity as HomeActivity).setSupportActionBar(binding.toolbar)
@@ -60,9 +62,9 @@ class FragmentTVShow : Fragment(), FragmentMovieContract.View {
         })
         setHasOptionsMenu(true)
 
-        binding.recyclerTvshow.layoutManager = LinearLayoutManager(context,
+        binding.recyclerFilms.layoutManager = WrapContentLinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        binding.recyclerTvshow.adapter = mAdapter
+        binding.recyclerFilms.adapter = mAdapter
         mAdapter.setOnClickMovieListener(object : MovieAdapter.OnClickMovieListener {
             override fun onClickMovie(movieId: Long) {
                 mPresenter.onClickMovie(movieId)
@@ -73,7 +75,7 @@ class FragmentTVShow : Fragment(), FragmentMovieContract.View {
             }
         })
 
-        binding.fabAddTvshow.setOnClickListener {
+        binding.fabAddFilm.setOnClickListener {
             mPresenter.onFabClicked()
         }
         return binding.root
@@ -107,14 +109,14 @@ class FragmentTVShow : Fragment(), FragmentMovieContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPresenter.attachView(this)
-        mPresenter.setMovieType(REQUEST_CODE_TVSHOW)
+        mPresenter.setMovieType(REQUEST_CODE_FILM)
         mPresenter.viewIsReady()
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass, FragmentTVShowModule(context!!))
+                .getComponent(javaClass, FragmentFilmModule(context!!))
                 .inject(this)
     }
 

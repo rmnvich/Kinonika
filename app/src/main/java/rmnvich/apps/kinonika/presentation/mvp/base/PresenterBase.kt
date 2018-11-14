@@ -1,4 +1,4 @@
-package rmnvich.apps.kinonika.presentation.mvp
+package rmnvich.apps.kinonika.presentation.mvp.base
 
 import android.app.Activity
 import android.support.v4.app.Fragment

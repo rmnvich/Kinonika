@@ -1,4 +1,4 @@
-package rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp
+package rmnvich.apps.kinonika.presentation.mvp.movie
 
 import android.content.Intent
 import android.support.v4.app.Fragment
@@ -8,12 +8,11 @@ import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.data.common.Constants
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity
 import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
-import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
+import rmnvich.apps.kinonika.presentation.mvp.base.PresenterBase
 
-class FragmentTVShowPresenter(
+class FragmentMoviePresenter(
         private val compositeDisposable: CompositeDisposable,
-        private val model: FragmentTVShowModel) :
+        private val model: FragmentMovieModel) :
         PresenterBase<FragmentMovieContract.View>(), FragmentMovieContract.Presenter {
 
     private var movieType: Int = -1
@@ -60,7 +59,7 @@ class FragmentTVShowPresenter(
                     view?.updateAdapter(it)
                 }, {
                     view?.hideProgress()
-                    view?.showMessage(getString(R.string.error))
+                    view?.showMessage(it.message!!)
                 }, { view?.hideProgress() })
     }
 
@@ -74,7 +73,7 @@ class FragmentTVShowPresenter(
         view?.setAnimationTypeToAdapter(position, Constants.ACTION_TYPE_UPDATE)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_TVSHOW)
+                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_FILM)
                 .putExtra(Constants.EXTRA_MOVIE_ID, movieId))
     }
 
@@ -82,7 +81,7 @@ class FragmentTVShowPresenter(
         view?.setAnimationTypeToAdapter(0, Constants.ACTION_TYPE_INSERT)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_TVSHOW))
+                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_FILM))
     }
 
     override fun detachView() {

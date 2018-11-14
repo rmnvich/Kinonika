@@ -2,7 +2,7 @@ package rmnvich.apps.kinonika.presentation.activity.review.mvp
 
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.kinonika.R
-import rmnvich.apps.kinonika.presentation.mvp.PresenterBase
+import rmnvich.apps.kinonika.presentation.mvp.base.PresenterBase
 
 class ReviewActivityPresenter(
         private val compositeDisposable: CompositeDisposable,

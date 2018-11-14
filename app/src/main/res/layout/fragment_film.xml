@@ -7,7 +7,7 @@
 
         <variable
             name="handler"
-            type="rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentFilm" />
+            type="rmnvich.apps.kinonika.presentation.fragment.film.FragmentFilm" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

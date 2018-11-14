@@ -27,7 +27,7 @@
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             app:elevation="@dimen/bottom_nav_view_elevation"
-            app:itemIconTint="@color/colorAccent"
+            app:itemIconTint="@color/bottom_icon_tint"
             app:itemTextColor="@color/colorAccentWhite"
             app:layout_insetEdge="bottom"
             app:menu="@menu/navigation_menu" />

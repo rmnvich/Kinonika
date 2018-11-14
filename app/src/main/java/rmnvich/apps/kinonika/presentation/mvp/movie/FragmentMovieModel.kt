@@ -1,11 +1,10 @@
-package rmnvich.apps.kinonika.presentation.fragment.series.mvp
+package rmnvich.apps.kinonika.presentation.mvp.movie
 
 import io.reactivex.Flowable
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentMovieContract
 
-class FragmentSeriesModel(
+class FragmentMovieModel(
         private val databaseRepository: DatabaseRepository) :
         FragmentMovieContract.Model {
 
@@ -20,4 +19,5 @@ class FragmentSeriesModel(
     override fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
                                       rating: Int, year: String): Flowable<List<Movie>> {
         return databaseRepository.getAllFilteredMovies(movieType, genre, tag, year, rating)
-    }}
+    }
+}

@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.databinding.ActivityHomeBinding
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoon
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentFilm
-import rmnvich.apps.kinonika.presentation.fragment.series.mvp.FragmentSeries
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow
+import rmnvich.apps.kinonika.presentation.fragment.cartoon.FragmentCartoon
+import rmnvich.apps.kinonika.presentation.fragment.film.FragmentFilm
+import rmnvich.apps.kinonika.presentation.fragment.series.FragmentSeries
+import rmnvich.apps.kinonika.presentation.fragment.tvshow.FragmentTVShow
 import javax.inject.Inject
 import rmnvich.apps.kinonika.presentation.custom.OnBackPressedListener
 

@@ -17,13 +17,13 @@ import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity;
 import rmnvich.apps.kinonika.presentation.activity.review.dagger.ReviewActivityComponent;
 import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity;
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonComponent;
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.mvp.FragmentCartoon;
+import rmnvich.apps.kinonika.presentation.fragment.cartoon.FragmentCartoon;
 import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmComponent;
-import rmnvich.apps.kinonika.presentation.fragment.film.mvp.FragmentFilm;
+import rmnvich.apps.kinonika.presentation.fragment.film.FragmentFilm;
 import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesComponent;
-import rmnvich.apps.kinonika.presentation.fragment.series.mvp.FragmentSeries;
+import rmnvich.apps.kinonika.presentation.fragment.series.FragmentSeries;
 import rmnvich.apps.kinonika.presentation.fragment.tvshow.dagger.FragmentTVShowComponent;
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.mvp.FragmentTVShow;
+import rmnvich.apps.kinonika.presentation.fragment.tvshow.FragmentTVShow;
 
 @Module(subcomponents = {HomeActivityComponent.class, FragmentFilmComponent.class, FragmentSeriesComponent.class,
         FragmentTVShowComponent.class, FragmentCartoonComponent.class, MakeReviewActivityComponent.class,
