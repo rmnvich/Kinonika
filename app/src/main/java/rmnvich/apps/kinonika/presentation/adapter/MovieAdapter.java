@@ -30,25 +30,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private int actionType = -1;
     private int position = -1;
 
-    public void setData(List<Movie> data) {
-        boolean isSimilarLists = mMovieFilteredList.size() != 0;
-        for (int i = 0; i < mMovieFilteredList.size(); i++) {
-            if (mMovieFilteredList.get(i).getId() != data.get(i).getId()) {
-                isSimilarLists = false;
-                break;
-            }
-        }
-        mMovieList = data;
-        mMovieFilteredList = data;
-        updateWithAnimations(isSimilarLists);
-    }
-
     public void setActionType(int actionType) {
         this.actionType = actionType;
     }
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public void setData(List<Movie> data) {
+        boolean isSimilarLists = mMovieFilteredList.size() != 0;
+        try {
+            for (int i = 0; i < mMovieFilteredList.size(); i++) {
+                if (mMovieFilteredList.get(i).getId() != data.get(i).getId()) {
+                    isSimilarLists = false;
+                    break;
+                }
+            }
+        } catch (IndexOutOfBoundsException e) {
+            updateData(data, false);
+        }
+
+        updateData(data, isSimilarLists);
+    }
+
+    private void updateData(List<Movie> data, boolean isSimilarLists) {
+        mMovieList = data;
+        mMovieFilteredList = data;
+        updateWithAnimations(isSimilarLists);
     }
 
     private void updateWithAnimations(boolean isSimilarLists) {

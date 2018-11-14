@@ -59,7 +59,7 @@ class FragmentMoviePresenter(
                     view?.updateAdapter(it)
                 }, {
                     view?.hideProgress()
-                    view?.showMessage(it.message!!)
+                    view?.showMessage(getString(R.string.error))
                 }, { view?.hideProgress() })
     }
 

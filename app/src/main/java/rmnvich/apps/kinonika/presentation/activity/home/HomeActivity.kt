@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.databinding.ActivityHomeBinding
@@ -55,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
         mActiveFragment = mFragmentFilm
         showFragment()
 
+        binding.bottomNavigationView.enableShiftingMode(false)
         binding.bottomNavigationView.onNavigationItemSelectedListener =
                 BottomNavigationView.OnNavigationItemSelectedListener {
                     mActiveFragment = when (it.itemId) {
