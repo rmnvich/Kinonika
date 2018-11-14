@@ -25,40 +25,16 @@
     <string name="filter">Filter</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="share">Share</string>
+    <string name="send_via">Send via</string>
 
-    <!--<string-array name="genres">-->
-        <!--<item />-->
-        <!--<item>Erotic</item>-->
-        <!--<item>Fantasy</item>-->
-        <!--<item>Film noir</item>-->
-        <!--<item>Horrors</item>-->
-        <!--<item>Thriller</item>-->
-        <!--<item>Talk show</item>-->
-        <!--<item>Sport</item>-->
-        <!--<item>Family</item>-->
-        <!--<item>Reality show</item>-->
-        <!--<item>Adventure</item>-->
-        <!--<item>Scientific</item>-->
-        <!--<item>Musical</item>-->
-        <!--<item>Cartoon</item>-->
-        <!--<item>Music</item>-->
-        <!--<item>Mystic</item>-->
-        <!--<item>Melodrama</item>-->
-        <!--<item>Crime</item>-->
-        <!--<item>Short</item>-->
-        <!--<item>Concert</item>-->
-        <!--<item>Comedy</item>-->
-        <!--<item>Kinokomiks</item>-->
-        <!--<item>Historical</item>-->
-        <!--<item>Drama</item>-->
-        <!--<item>Documentary</item>-->
-        <!--<item>Children</item>-->
-        <!--<item>Detective</item>-->
-        <!--<item>Military</item>-->
-        <!--<item>Western</item>-->
-        <!--<item>Action movie</item>-->
-        <!--<item>Biographical</item>-->
-    <!--</string-array>-->
+    <string name="country_ru">Страна:</string>
+    <string name="year_ru">Год:</string>
+    <string name="genre_ru">Жанр:</string>
+    <string name="rating_ru">Оценка:</string>
+    <string name="imdb_ru">IMDb:</string>
+    <string name="plot_ru">Сюжет:</string>
+
     <string-array name="genres">
         <item />
         <item>Аниме</item>

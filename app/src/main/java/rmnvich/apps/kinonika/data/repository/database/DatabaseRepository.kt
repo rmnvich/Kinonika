@@ -1,6 +1,5 @@
 package rmnvich.apps.kinonika.data.repository.database
 
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single

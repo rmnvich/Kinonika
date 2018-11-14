@@ -1,18 +1,21 @@
 package rmnvich.apps.kinonika.presentation.activity.review.mvp
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import com.bumptech.glide.Glide
 import rmnvich.apps.kinonika.R
 import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.data.common.Constants
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.databinding.ActivityViewReviewBinding
-import rmnvich.apps.kinonika.presentation.activity.make.dagger.MakeReviewActivityModule
 import java.io.File
 import javax.inject.Inject
+
 
 class ViewReviewActivity : AppCompatActivity(), ReviewActivityContract.View {
 
@@ -31,6 +34,20 @@ class ViewReviewActivity : AppCompatActivity(), ReviewActivityContract.View {
                 .getComponent(javaClass).inject(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.share_menu, menu)
+        val shareItem = menu?.findItem(R.id.item_share)
+        shareItem?.setOnMenuItemClickListener {
+            binding.ivPoster.invalidate()
+            val drawable = binding.ivPoster.drawable as BitmapDrawable
+            val bitmap = drawable.bitmap
+
+            mPresenter.onShareClicked(binding.movie!!, bitmap)
+            true
+        }
+        return true
+    }
+
     @Inject
     fun init() {
         setSupportActionBar(binding.toolbar)
@@ -40,6 +57,11 @@ class ViewReviewActivity : AppCompatActivity(), ReviewActivityContract.View {
         mPresenter.setMovieId(intent.getLongExtra(
                 Constants.EXTRA_MOVIE_ID, -1L))
         mPresenter.viewIsReady()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mPresenter.onActivityResult()
     }
 
     override fun showMessage(text: String) {

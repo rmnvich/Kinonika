@@ -73,7 +73,7 @@ class FragmentMoviePresenter(
         view?.setAnimationTypeToAdapter(position, Constants.ACTION_TYPE_UPDATE)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_FILM)
+                .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType)
                 .putExtra(Constants.EXTRA_MOVIE_ID, movieId))
     }
 
@@ -81,7 +81,7 @@ class FragmentMoviePresenter(
         view?.setAnimationTypeToAdapter(0, Constants.ACTION_TYPE_INSERT)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_TYPE, Constants.REQUEST_CODE_FILM))
+                .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType))
     }
 
     override fun detachView() {
