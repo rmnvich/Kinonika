@@ -21,18 +21,6 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    @Inject
-    lateinit var mFragmentFilm: FragmentFilm
-
-    @Inject
-    lateinit var mFragmentSeries: FragmentSeries
-
-    @Inject
-    lateinit var mFragmentTVShow: FragmentTVShow
-
-    @Inject
-    lateinit var mFragmentCartoon: FragmentCartoon
-
     private val mFragmentManager = supportFragmentManager
     private var mActiveFragment: Fragment? = null
 
@@ -46,28 +34,35 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.handler = this
-
-        App.getApp(this).componentsHolder
-                .getComponent(javaClass).inject(this)
+        init()
     }
 
     @Inject
     fun init() {
-        mActiveFragment = mFragmentFilm
+        mActiveFragment = FragmentFilm.newInstance()
         showFragment()
 
         binding.bottomNavigationView.enableShiftingMode(false)
         binding.bottomNavigationView.onNavigationItemSelectedListener =
                 BottomNavigationView.OnNavigationItemSelectedListener {
                     mActiveFragment = when (it.itemId) {
-                        R.id.nav_films -> mFragmentFilm
-                        R.id.nav_series -> mFragmentSeries
-                        R.id.nav_tvshow -> mFragmentTVShow
-                        else -> mFragmentCartoon
+                        R.id.nav_films -> FragmentFilm.newInstance()
+                        R.id.nav_series -> FragmentSeries.newInstance()
+                        R.id.nav_tvshow -> FragmentTVShow.newInstance()
+                        R.id.nav_cartoons -> FragmentCartoon.newInstance()
+                        else -> FragmentFilm.newInstance()
                     }
                     showFragment()
                     true
                 }
+    }
+
+    fun showProgress() {
+        binding.progressBar.smoothToShow()
+    }
+
+    fun hideProgress() {
+        binding.progressBar.smoothToHide()
     }
 
     private fun showFragment() {
@@ -81,13 +76,5 @@ class HomeActivity : AppCompatActivity() {
         if (onBackPressedListener != null)
             onBackPressedListener?.doBack()
         else super.onBackPressed()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isFinishing) {
-            App.getApp(this).componentsHolder
-                    .releaseComponent(javaClass)
-        }
     }
 }

@@ -139,16 +139,11 @@ class FragmentCartoon : Fragment(), FragmentMovieContract.View {
     }
 
     override fun showProgress() {
-        binding.progressBar.smoothToShow()
+        (activity as HomeActivity).showProgress()
     }
 
     override fun hideProgress() {
-        binding.progressBar.smoothToHide()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.searchView.closeSearch()
+        (activity as HomeActivity).hideProgress()
     }
 
     override fun onDetach() {

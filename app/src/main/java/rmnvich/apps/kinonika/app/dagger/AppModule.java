@@ -10,22 +10,20 @@ import dagger.multibindings.IntoMap;
 import rmnvich.apps.kinonika.data.di.base.BaseComponentBuilder;
 import rmnvich.apps.kinonika.data.repository.database.DatabaseRepository;
 import rmnvich.apps.kinonika.data.repository.database.utils.AppDatabase;
-import rmnvich.apps.kinonika.presentation.activity.home.dagger.HomeActivityComponent;
-import rmnvich.apps.kinonika.presentation.activity.home.HomeActivity;
 import rmnvich.apps.kinonika.presentation.activity.make.dagger.MakeReviewActivityComponent;
 import rmnvich.apps.kinonika.presentation.activity.make.mvp.MakeReviewActivity;
 import rmnvich.apps.kinonika.presentation.activity.review.dagger.ReviewActivityComponent;
 import rmnvich.apps.kinonika.presentation.activity.review.mvp.ViewReviewActivity;
-import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonComponent;
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.FragmentCartoon;
-import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmComponent;
+import rmnvich.apps.kinonika.presentation.fragment.cartoon.dagger.FragmentCartoonComponent;
 import rmnvich.apps.kinonika.presentation.fragment.film.FragmentFilm;
-import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesComponent;
+import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmComponent;
 import rmnvich.apps.kinonika.presentation.fragment.series.FragmentSeries;
-import rmnvich.apps.kinonika.presentation.fragment.tvshow.dagger.FragmentTVShowComponent;
+import rmnvich.apps.kinonika.presentation.fragment.series.dagger.FragmentSeriesComponent;
 import rmnvich.apps.kinonika.presentation.fragment.tvshow.FragmentTVShow;
+import rmnvich.apps.kinonika.presentation.fragment.tvshow.dagger.FragmentTVShowComponent;
 
-@Module(subcomponents = {HomeActivityComponent.class, FragmentFilmComponent.class, FragmentSeriesComponent.class,
+@Module(subcomponents = {FragmentFilmComponent.class, FragmentSeriesComponent.class,
         FragmentTVShowComponent.class, FragmentCartoonComponent.class, MakeReviewActivityComponent.class,
         ReviewActivityComponent.class})
 public class AppModule {
@@ -52,13 +50,6 @@ public class AppModule {
     AppDatabase provideAppDatabase() {
         return Room.databaseBuilder(mContext, AppDatabase.class,
                 "testDatabase19").build();
-    }
-
-    @Provides
-    @IntoMap
-    @ClassKey(HomeActivity.class)
-    BaseComponentBuilder provideLoginActivity(HomeActivityComponent.Builder builder) {
-        return builder;
     }
 
     @Provides
