@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log.d
 import android.view.*
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
@@ -74,10 +75,6 @@ class FragmentFilm : Fragment(), FragmentMovieContract.View {
                 mPresenter.onLongClickMovie(movieId, position)
             }
         })
-
-        binding.fabAddFilm.setOnClickListener {
-            mPresenter.onFabClicked()
-        }
         return binding.root
     }
 
@@ -120,6 +117,10 @@ class FragmentFilm : Fragment(), FragmentMovieContract.View {
                 .inject(this)
     }
 
+    override fun onFabClicked() {
+        mPresenter.onFabClicked()
+    }
+
     override fun updateAdapter(movies: List<Movie>) {
         mAdapter.setData(movies)
     }
@@ -147,8 +148,8 @@ class FragmentFilm : Fragment(), FragmentMovieContract.View {
         binding.progressBar.smoothToHide()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.searchView.closeSearch()
     }
 

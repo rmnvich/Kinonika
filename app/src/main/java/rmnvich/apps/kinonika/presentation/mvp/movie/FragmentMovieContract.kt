@@ -14,6 +14,8 @@ interface FragmentMovieContract {
 
         fun setAnimationTypeToAdapter(position: Int, animationType: Int)
 
+        fun onFabClicked()
+
         fun showFilterDialog(tags: List<String>)
 
         fun showMessage(text: String)

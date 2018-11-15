@@ -72,10 +72,6 @@ class FragmentSeries : Fragment(), FragmentMovieContract.View {
                 mPresenter.onLongClickMovie(movieId, position)
             }
         })
-
-        binding.fabAddSeries.setOnClickListener {
-            mPresenter.onFabClicked()
-        }
         return binding.root
     }
 
@@ -118,6 +114,10 @@ class FragmentSeries : Fragment(), FragmentMovieContract.View {
                 .inject(this)
     }
 
+    override fun onFabClicked() {
+        mPresenter.onFabClicked()
+    }
+
     override fun updateAdapter(movies: List<Movie>) {
         mAdapter.setData(movies)
     }
@@ -145,8 +145,8 @@ class FragmentSeries : Fragment(), FragmentMovieContract.View {
         binding.progressBar.smoothToHide()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.searchView.closeSearch()
     }
 

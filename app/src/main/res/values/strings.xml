@@ -34,6 +34,8 @@
     <string name="rating_ru">Оценка:</string>
     <string name="imdb_ru">IMDb:</string>
     <string name="plot_ru">Сюжет:</string>
+    <string name="sent_through_kinonika"><![CDATA[Отправлено с помощью Kinonika <3]]></string>
+    <string name="divider">--------------------------------------</string>
 
     <string-array name="genres">
         <item />

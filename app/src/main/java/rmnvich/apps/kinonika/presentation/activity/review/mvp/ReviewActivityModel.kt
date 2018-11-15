@@ -1,12 +1,8 @@
 package rmnvich.apps.kinonika.presentation.activity.review.mvp
 
-import android.app.Activity
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Environment
-import android.support.v4.content.FileProvider
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,6 +12,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.Callable
 
 class ReviewActivityModel(
@@ -35,9 +32,12 @@ class ReviewActivityModel(
     inner class CallableBitmapAction(private var bitmap: Bitmap) : Callable<File> {
 
         override fun call(): File {
+            val calendar = Calendar.getInstance()
+
             val bytes = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-            val file = File("${Environment.getExternalStorageDirectory()}${File.separator}temp_file.jpg")
+            val file = File("${Environment.getExternalStorageDirectory()}${File.separator}" +
+                    "temp_file${calendar.timeInMillis}.jpg")
             try {
                 file.createNewFile()
                 val fo = FileOutputStream(file)
