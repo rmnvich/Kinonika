@@ -28,11 +28,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void setData(List<Movie> data) {
         MovieDiffUtilCallback diffUtilCallback =
                 new MovieDiffUtilCallback(mMovieFilteredList, data);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
+                diffUtilCallback, true);
 
         mMovieList = data;
         mMovieFilteredList = data;
-
         diffResult.dispatchUpdatesTo(this);
     }
 
