@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.ViewGroup
 import rmnvich.apps.kinonika.R
-import rmnvich.apps.kinonika.app.App
 import rmnvich.apps.kinonika.databinding.ActivityHomeBinding
+import rmnvich.apps.kinonika.presentation.custom.OnBackPressedListener
 import rmnvich.apps.kinonika.presentation.fragment.cartoon.FragmentCartoon
 import rmnvich.apps.kinonika.presentation.fragment.film.FragmentFilm
 import rmnvich.apps.kinonika.presentation.fragment.series.FragmentSeries
 import rmnvich.apps.kinonika.presentation.fragment.tvshow.FragmentTVShow
 import javax.inject.Inject
-import rmnvich.apps.kinonika.presentation.custom.OnBackPressedListener
 
 
 class HomeActivity : AppCompatActivity() {
@@ -45,14 +43,33 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationView.enableShiftingMode(false)
         binding.bottomNavigationView.onNavigationItemSelectedListener =
                 BottomNavigationView.OnNavigationItemSelectedListener {
-                    mActiveFragment = when (it.itemId) {
-                        R.id.nav_films -> FragmentFilm.newInstance()
-                        R.id.nav_series -> FragmentSeries.newInstance()
-                        R.id.nav_tvshow -> FragmentTVShow.newInstance()
-                        R.id.nav_cartoons -> FragmentCartoon.newInstance()
+                    when (it.itemId) {
+                        R.id.nav_films -> {
+                            if (mActiveFragment !is FragmentFilm) {
+                                mActiveFragment = FragmentFilm.newInstance()
+                                showFragment()
+                            }
+                        }
+                        R.id.nav_series -> {
+                            if (mActiveFragment !is FragmentSeries) {
+                                mActiveFragment = FragmentSeries.newInstance()
+                                showFragment()
+                            }
+                        }
+                        R.id.nav_tvshow -> {
+                            if (mActiveFragment !is FragmentTVShow) {
+                                mActiveFragment = FragmentTVShow.newInstance()
+                                showFragment()
+                            }
+                        }
+                        R.id.nav_cartoons -> {
+                            if (mActiveFragment !is FragmentCartoon) {
+                                mActiveFragment = FragmentCartoon.newInstance()
+                                showFragment()
+                            }
+                        }
                         else -> FragmentFilm.newInstance()
                     }
-                    showFragment()
                     true
                 }
     }

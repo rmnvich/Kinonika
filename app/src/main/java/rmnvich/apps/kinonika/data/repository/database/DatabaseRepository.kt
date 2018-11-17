@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import rmnvich.apps.kinonika.data.entity.Movie
 import rmnvich.apps.kinonika.data.entity.Tag
 import rmnvich.apps.kinonika.data.repository.database.utils.AppDatabase
+import java.util.concurrent.TimeUnit
 
 class DatabaseRepository(appDatabase: AppDatabase) {
 
@@ -57,6 +58,7 @@ class DatabaseRepository(appDatabase: AppDatabase) {
     private fun getAllMovies(movieType: Int): Flowable<List<Movie>> {
         return movieDao.getAllMovies(movieType)
                 .subscribeOn(Schedulers.io())
+                .delay(250, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
@@ -68,10 +70,12 @@ class DatabaseRepository(appDatabase: AppDatabase) {
             movieDao.getAllFilteredMovies(movieType, "%$genre%", "%$tag%",
                     "%$year%")
                     .subscribeOn(Schedulers.io())
+                    .delay(250, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
         } else movieDao.getAllFilteredMovies(movieType, "%$genre%", "%$tag%",
                 "%$year%", rating)
                 .subscribeOn(Schedulers.io())
+                .delay(250, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
     }
 }
