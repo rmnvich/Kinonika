@@ -3,12 +3,10 @@ package rmnvich.apps.kinonika.presentation.fragment.film
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log.d
 import android.view.*
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.kinonika.R
@@ -21,12 +19,11 @@ import rmnvich.apps.kinonika.presentation.adapter.MovieAdapter
 import rmnvich.apps.kinonika.presentation.custom.BaseBackPressedListener
 import rmnvich.apps.kinonika.presentation.custom.WrapContentLinearLayoutManager
 import rmnvich.apps.kinonika.presentation.dialog.DialogFilter
+import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmModule
 import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMovieContract
 import rmnvich.apps.kinonika.presentation.mvp.movie.FragmentMoviePresenter
-import rmnvich.apps.kinonika.presentation.fragment.film.dagger.FragmentFilmModule
 import javax.inject.Inject
 import javax.inject.Provider
-
 
 class FragmentFilm : Fragment(), FragmentMovieContract.View {
 

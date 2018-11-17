@@ -12,10 +12,6 @@ class FragmentMovieModel(
         return databaseRepository.getAllTags()
     }
 
-    override fun getAllMovies(movieType: Int): Flowable<List<Movie>> {
-        return databaseRepository.getAllMovies(movieType)
-    }
-
     override fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
                                       rating: Int, year: String): Flowable<List<Movie>> {
         return databaseRepository.getAllFilteredMovies(movieType, genre, tag, year, rating)

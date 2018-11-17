@@ -12,21 +12,30 @@ import rmnvich.apps.kinonika.presentation.mvp.base.PresenterBase
 
 class FragmentMoviePresenter(
         private val compositeDisposable: CompositeDisposable,
-        private val model: FragmentMovieModel) :
-        PresenterBase<FragmentMovieContract.View>(), FragmentMovieContract.Presenter {
+        private val model: FragmentMovieModel
+) : PresenterBase<FragmentMovieContract.View>(), FragmentMovieContract.Presenter {
 
     private var movieType: Int = -1
-
-    private var allMoviesDisposable: Disposable? = null
-    private var filteredMoviesDisposable: Disposable? = null
+    private var filterDisposable: Disposable? = null
 
     override fun setMovieType(movieType: Int) {
         this.movieType = movieType
     }
 
     override fun viewIsReady() {
+        loadMovies("", "", 0, "")
+    }
+
+    override fun onFilterApply(genre: String, tag: String, rating: Int, year: String) {
+        loadMovies(genre, tag, rating, year)
+    }
+
+    override fun loadMovies(genre: String, tag: String, rating: Int, year: String) {
         view?.showProgress()
-        allMoviesDisposable = model.getAllMovies(movieType)
+        if (filterDisposable != null && !filterDisposable?.isDisposed!!)
+            filterDisposable?.dispose()
+
+        filterDisposable = model.getAllFilteredMovies(movieType, genre, tag, rating, year)
                 .subscribe({
                     view?.hideProgress()
                     view?.updateAdapter(it)
@@ -49,41 +58,25 @@ class FragmentMoviePresenter(
         compositeDisposable.add(disposable)
     }
 
-    override fun onFilterApply(genre: String, tag: String, rating: Int, year: String) {
-        allMoviesDisposable?.dispose()
-
-        view?.showProgress()
-        filteredMoviesDisposable = model.getAllFilteredMovies(movieType, genre, tag, rating, year)
-                .subscribe({
-                    view?.hideProgress()
-                    view?.updateAdapter(it)
-                }, {
-                    view?.hideProgress()
-                    view?.showMessage(getString(R.string.error))
-                }, { view?.hideProgress() })
-    }
-
     override fun onClickMovie(movieId: Long) {
         (view as Fragment).startActivity(Intent((view as Fragment).context,
-                ViewReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_ID, movieId))
+                ViewReviewActivity::class.java).putExtra(Constants.EXTRA_MOVIE_ID, movieId))
     }
 
     override fun onLongClickMovie(movieId: Long, position: Int) {
-        (view as Fragment).startActivity(Intent((view as Fragment).context,
-                MakeReviewActivity::class.java)
+        (view as Fragment).startActivity(Intent((view as Fragment).context, MakeReviewActivity::class.java)
                 .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType)
                 .putExtra(Constants.EXTRA_MOVIE_ID, movieId))
     }
 
     override fun onFabClicked() {
         (view as Fragment).startActivity(Intent((view as Fragment).context,
-                MakeReviewActivity::class.java)
-                .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType))
+                MakeReviewActivity::class.java).putExtra(Constants.EXTRA_MOVIE_TYPE, movieType))
     }
 
     override fun detachView() {
         super.detachView()
         compositeDisposable.dispose()
+        filterDisposable?.dispose()
     }
 }

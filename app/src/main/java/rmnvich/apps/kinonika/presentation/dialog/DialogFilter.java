@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +91,7 @@ public class DialogFilter extends MaterialDialog.Builder implements MaterialDial
         this.title(R.string.filter)
                 .customView(view, true)
                 .backgroundColor(context.getColor(R.color.colorPrimary))
-                .icon(context.getDrawable(R.drawable.ic_action_filter_inverted))
+                .icon(Objects.requireNonNull(context.getDrawable(R.drawable.ic_action_filter_inverted)))
                 .titleColor(Color.WHITE)
                 .positiveText(R.string.apply)
                 .negativeText(R.string.cancel)
@@ -102,12 +103,8 @@ public class DialogFilter extends MaterialDialog.Builder implements MaterialDial
 
     @Override
     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        if (genre.isEmpty() && tag.isEmpty() && year.isEmpty() && rating == 0) {
-            dialog.dismiss();
-        } else {
-            mListener.onClickApply(genre, tag, rating, year);
-            dialog.dismiss();
-        }
+        mListener.onClickApply(genre, tag, rating, year);
+        dialog.dismiss();
     }
 
     public void show(DialogFilterCallbackListener listener, List<String> tags) {

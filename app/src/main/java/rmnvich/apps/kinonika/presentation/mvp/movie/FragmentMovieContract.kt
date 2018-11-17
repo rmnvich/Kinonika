@@ -25,6 +25,8 @@ interface FragmentMovieContract {
 
         fun onClickFilter()
 
+        fun loadMovies(genre: String, tag: String, rating: Int, year: String)
+
         fun onFilterApply(genre: String, tag: String, rating: Int, year: String)
 
         fun onClickMovie(movieId: Long)
@@ -37,8 +39,6 @@ interface FragmentMovieContract {
     interface Model : MvpModel {
 
         fun getTags(): Flowable<List<String>>
-
-        fun getAllMovies(movieType: Int): Flowable<List<Movie>>
 
         fun getAllFilteredMovies(movieType: Int, genre: String, tag: String,
                                  rating: Int, year: String): Flowable<List<Movie>>
