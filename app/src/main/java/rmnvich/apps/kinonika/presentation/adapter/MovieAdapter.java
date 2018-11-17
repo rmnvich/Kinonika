@@ -2,7 +2,9 @@ package rmnvich.apps.kinonika.presentation.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,68 +19,22 @@ import rmnvich.apps.kinonika.R;
 import rmnvich.apps.kinonika.data.entity.Movie;
 import rmnvich.apps.kinonika.databinding.ItemMovieBinding;
 
-import static rmnvich.apps.kinonika.data.common.Constants.ACTION_TYPE_DELETE;
-import static rmnvich.apps.kinonika.data.common.Constants.ACTION_TYPE_INSERT;
-import static rmnvich.apps.kinonika.data.common.Constants.ACTION_TYPE_UPDATE;
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> implements Filterable {
 
     private OnClickMovieListener mListener;
     private List<Movie> mMovieList = new LinkedList<>();
     private List<Movie> mMovieFilteredList = new LinkedList<>();
 
-    private int actionType = -1;
-    private int position = -1;
-
-    public void setActionType(int actionType) {
-        this.actionType = actionType;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     public void setData(List<Movie> data) {
-        boolean isSimilarLists = mMovieFilteredList.size() != 0;
-        try {
-            for (int i = 0; i < mMovieFilteredList.size(); i++) {
-                if (mMovieFilteredList.get(i).getId() != data.get(i).getId()) {
-                    isSimilarLists = false;
-                    break;
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            updateData(data, false);
-        }
+        MovieDiffUtilCallback diffUtilCallback =
+                new MovieDiffUtilCallback(mMovieFilteredList, data);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
 
-        updateData(data, isSimilarLists);
-    }
-
-    private void updateData(List<Movie> data, boolean isSimilarLists) {
         mMovieList = data;
         mMovieFilteredList = data;
-        updateWithAnimations(isSimilarLists);
-    }
 
-    private void updateWithAnimations(boolean isSimilarLists) {
-        try {
-            if (actionType == -1 && position == -1) {
-                notifyDataSetChanged();
-            } else if (actionType == ACTION_TYPE_INSERT) {
-                if (!isSimilarLists)
-                    notifyItemInserted(position);
-            } else if (actionType == ACTION_TYPE_DELETE) {
-                notifyItemRemoved(position);
-            } else if (actionType == ACTION_TYPE_UPDATE) {
-                notifyItemChanged(position);
-            }
-            actionType = -1;
-            position = -1;
-        } catch (IndexOutOfBoundsException e) {
-            notifyDataSetChanged();
-        }
+        diffResult.dispatchUpdatesTo(this);
     }
-
 
     @NonNull
     @Override
@@ -91,6 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("qwe", "position = " + position);
         holder.bind(mMovieFilteredList.get(position));
         setFadeAnimation(holder.itemView);
     }

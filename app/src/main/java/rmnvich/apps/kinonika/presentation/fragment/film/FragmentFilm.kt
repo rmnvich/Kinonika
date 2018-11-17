@@ -3,6 +3,7 @@ package rmnvich.apps.kinonika.presentation.fragment.film
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -125,11 +126,6 @@ class FragmentFilm : Fragment(), FragmentMovieContract.View {
         mAdapter.setData(movies)
     }
 
-    override fun setAnimationTypeToAdapter(position: Int, animationType: Int) {
-        mAdapter.setActionType(animationType)
-        mAdapter.setPosition(position)
-    }
-
     override fun showFilterDialog(tags: List<String>) {
         mFilterDialog.get().show({ genre, tag, rating, year ->
             mPresenter.onFilterApply(genre, tag, rating, year)
@@ -146,6 +142,11 @@ class FragmentFilm : Fragment(), FragmentMovieContract.View {
 
     override fun hideProgress() {
         (activity as HomeActivity).hideProgress()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.searchView.closeSearch()
     }
 
     override fun onDetach() {

@@ -123,11 +123,6 @@ class FragmentCartoon : Fragment(), FragmentMovieContract.View {
         mAdapter.setData(movies)
     }
 
-    override fun setAnimationTypeToAdapter(position: Int, animationType: Int) {
-        mAdapter.setActionType(animationType)
-        mAdapter.setPosition(position)
-    }
-
     override fun showFilterDialog(tags: List<String>) {
         mFilterDialog.get().show({ genre, tag, rating, year ->
             mPresenter.onFilterApply(genre, tag, rating, year)
@@ -144,6 +139,11 @@ class FragmentCartoon : Fragment(), FragmentMovieContract.View {
 
     override fun hideProgress() {
         (activity as HomeActivity).hideProgress()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.searchView.closeSearch()
     }
 
     override fun onDetach() {

@@ -70,7 +70,6 @@ class FragmentMoviePresenter(
     }
 
     override fun onLongClickMovie(movieId: Long, position: Int) {
-        view?.setAnimationTypeToAdapter(position, Constants.ACTION_TYPE_UPDATE)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
                 .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType)
@@ -78,7 +77,6 @@ class FragmentMoviePresenter(
     }
 
     override fun onFabClicked() {
-        view?.setAnimationTypeToAdapter(0, Constants.ACTION_TYPE_INSERT)
         (view as Fragment).startActivity(Intent((view as Fragment).context,
                 MakeReviewActivity::class.java)
                 .putExtra(Constants.EXTRA_MOVIE_TYPE, movieType))
